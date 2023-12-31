@@ -1,0 +1,10 @@
+<!-- x: 3270298; y: 2638237, -->
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 4000000 4000000">
+<!-- <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="2470298 1838237 1600000 1600000"> -->
+    <rect x="0" y="0" width="4000000" height="4000000" fill="none" stroke="black" stroke-width="0.1%" stroke-dasharray="1%" />
+    <polygon points="2888433,3020101,3571377,2337157,2888433,1654213,2205489,2337157" fill="#ffbf00" fill-opacity="0.25" stroke="black" stroke-width="0.1%" />
+    <polygon points="3423261,2791199,4022502,2191958,3423261,1592717,2824020,2191958" fill="#ff00ff" fill-opacity="0.25" stroke="black" stroke-width="0.1%" />
+    <polygon points="3495504,3740932,4159454,3076982,3495504,2413032,2831554,3076982" fill="#ff0000" fill-opacity="0.25" stroke="black" stroke-width="0.1%" />
+    <polygon points="3060628,3736892,3714790,3082730,3060628,2428568,2406466,3082730" fill="#d4ff00" fill-opacity="0.25" stroke="black" stroke-width="0.1%" />
+    <circle cx="3270298" cy="2638237" r="2%" stroke="black" stroke-width="0.2%" fill="none" />
+</svg>
