@@ -14,7 +14,7 @@ skipRss: true
 > # Pre Publish
 > - [ ] Spell check
 > - [x] Review title and URL. Make note of how late the blog post is.
-> - [ ] Make sure website RSS feed works
+> - [x] Make sure website RSS feed works
 > - [ ] gianhancock.com domain
 > - [ ] Complete all inline TODOs
 > - [ ] Add proper performance numbers for all approaches, add a table at the end including manhattan distance counts
