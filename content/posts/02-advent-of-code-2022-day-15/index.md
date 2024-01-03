@@ -462,7 +462,7 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 {{<figure src="final-solution-4.svg" width="500px" caption="fig. 37: 125 x 125 view">}}
 </div>
 
-{{<figure src="final-solution-5.svg" width="800px" caption="Only sensors neighbouring the solution">}}
+{{<figure src="final-solution-5.svg" width="800px" caption="fig. 38: Only sensors neighbouring the solution">}}
 
 # 7.2. Performance Comparison
 
