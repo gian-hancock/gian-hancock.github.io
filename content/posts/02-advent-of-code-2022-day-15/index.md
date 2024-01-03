@@ -11,21 +11,8 @@ author: Gian Hancock
 > This post is in draft and will change over time.
 > 
 > TODO:
-> # Draft 2:
-> - [x] Incorporate feedback from my wife.
-> - [x] Consider changing "search space" to "search area"
-> - [x] Discuss datastructures for storing ranges.
-> - [x] Image sizing
-> - [x] Review titles and title numbering
-> - [x] Make sure pseudocode doesn't wrap at full width
-> - [x] Styling increase column width
-> - [x] Label figures, and refer to labels for clarity
-> - [x] Find a home for these tidbits:
->   - [x] if we were to use Euclidean distance each sensor would be a [circle](https://en.wikipedia.org/wiki/Gauss_circle_problem)[manhattan-distance]
->   - [x] Another side effect of using Manhattan distance is that the distance between any two integer points is always an integer[closed-addition].
-> - [x] Add visualisation of final solution
-> - [x] Rename diagram files 
 > # Pre Publish
+> - [ ] Review title and URL. Make note of how late the blog post is.
 > - [ ] Make sure website RSS feed works
 > - [ ] gianhancock.com domain
 > - [ ] Complete all inline TODOs
@@ -33,6 +20,7 @@ author: Gian Hancock
 > - [ ] Clean up source code and diagrams in repo
 > - [ ] Fix implementation coordinate spaces with swapped `x'` `y'` axes and off by one.
 > - [ ] Double check title numbering
+> - [ ] Set up Github Discussions
 > - [ ] https://giscus.app/
 > - [ ] Make sure website appears nicely on Feedly 
 > # Later
@@ -57,11 +45,11 @@ I'll start with a diagram, and I'll attempt to explain how to interpret it from 
 
 The problem takes place on a 2D grid, I've placed gridlines at 1 unit intervals in the diagram to help visualise the scale and position of things. In general, all the action takes place at "integer points", which are points with integer coordinates e.g. `(0, 0)`, `(1, 2)`, `(3, 4)`, etc[^lattice]. Each integer point occurs at the intersection of two gridlines in the diagram.
 
-The single uncovered point we're looking for is somewhere in a 3x3 area which is represented by a dotted square. I'll call this area the "search area", in fig. 1 the search area is 3x3 units, but in the actual problem it's *much* larger: 4×10<sup>6</sup> by 4×10<sup>6</sup> units. The origin `(0, 0)` is always located at the bottom left corner of the search area. We'll show some area around the search area to give context, but remember that we're looking for uncovered points *inside* the search area.
+In the real problem, the single uncovered point is always located somewhere in a 4×10<sup>6</sup> by 4×10<sup>6</sup> unit area, which I'll call the "search area". For this example, a small 3x3 search area suffice. The origin `(0, 0)` is always located at the bottom left corner of the search area. I'll show some area around the search area to give context, but remember that we're looking for uncovered points *inside* the search area.
 
-In fig. 1 there is a single sensor `A` positioned at `(2, 2)` with a range of `2`. The area covered by `A` is diamond shaped rather than circular. This is because distance is measured by [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry). Note that some of the sensors coverage is outside of the search area, this is okay.
+In fig. 1 there is a single sensor `A` positioned at `(2, 2)` with a range of `3`. The area covered by `A` is diamond shaped rather than circular. This is because distance is measured by [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry). Note that some of the sensors coverage is outside of the search area, this is okay. In the real problem, we get a text file specifying the position and range of each sensor[^oversimplification]. The search area is always 4×10<sup>6</sup> by 4×10<sup>6</sup> units.
 
-Finally, there's a green circle at the point `(0, 0)`. This represents the solution to our toy version of the problem. In this case it's easy enough to see visually that this is the only uncovered point. Technically there's a small triangular area which isn't covered containing an infinite number of points, but remember we're only really interested in what happens at integer points[^point-coverage]. Also note that points on the border of a sensor are considered covered.
+Finally, there's a green circle at the point `(0, 0)`. This represents the solution to our toy version of the problem (its position of at the origin is just a coincidence). In this case it's easy enough to see visually that this is the only uncovered point. Technically there's a small triangular area which isn't covered containing an infinite number of points, but remember we're only really interested in what happens at integer points[^point-coverage]. Also note that points on the border of a sensor are considered covered.
 
 To drive this all home, let's look at a slightly more complicated example:
 
@@ -280,7 +268,7 @@ In this case we see that the sensor A actually covers two contiguous regions, `[
 
 We need to account for the possibility of 2 contiguous regions of covered rows. This is a bit more complicated, but it doesn't change the overall approach.
 
-## 5.2. Pseudocode: Range Exclusion
+## 5.3. Pseudocode: Range Exclusion
 Finally, here's our pseudocode for getting the y coordinate of the solution, it's very similar to the previous version:
 
 ```rust
@@ -324,7 +312,7 @@ return diagonal_to_rectangular_space(diagonal_space_solution);
 
 We do a bit of converting back and forth from standard to diagonal space and we handle multiple ranges for each for each sensor set. Otherwise it's the same as the previous version.
 
-## 5.3. Summary and Performance: Range Exclusion
+## 5.4. Summary and Performance: Range Exclusion
 
 > TODO: I haven't done this yet.
 
@@ -536,3 +524,6 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 
 [^brute-force]:
     Actually, some people did [brute force](https://www.reddit.com/r/adventofcode/comments/zmcn64/comment/j0rjkbk/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) it on a GPU, which is pretty cool.
+
+[^oversimplification]:
+    This is a bit of an oversimplification, but not much.
