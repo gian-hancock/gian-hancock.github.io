@@ -22,7 +22,7 @@ author: Gian Hancock
 > - [x] Label figures, and refer to labels for clarity
 > - [x] Find a home for these tidbits:
 >   - [x] if we were to use Euclidean distance each sensor would be a [circle](https://en.wikipedia.org/wiki/Gauss_circle_problem)[manhattan-distance]
->   - [x] Another side effect of using Manhattan distance is that the distance between any two integer points is always an integer[^closed-addition].
+>   - [x] Another side effect of using Manhattan distance is that the distance between any two integer points is always an integer[closed-addition].
 > - [x] Add visualisation of final solution
 > - [x] Rename diagram files 
 > # Pre Publish
@@ -55,18 +55,18 @@ I'll start with a diagram, and I'll attempt to explain how to interpret it from 
 
 {{<figure src="trivial-example.svg" width="400px" caption="fig. 1: A trivial example">}}
 
-The problem takes place on a 2D grid, I've placed gridlines at 1 unit intervals in the diagram to help visualise the scale and position of things. In general, all the action takes place at "integer points"[^closed-addition]. An integer point is a point with integer coordinates, e.g. `(0, 0)`, `(1, 2)`, `(3, 4)`, etc[^lattice]. Each integer point occurs at the intersection of two gridlines.
+The problem takes place on a 2D grid, I've placed gridlines at 1 unit intervals in the diagram to help visualise the scale and position of things. In general, all the action takes place at "integer points", which are points with integer coordinates e.g. `(0, 0)`, `(1, 2)`, `(3, 4)`, etc[^lattice]. Each integer point occurs at the intersection of two gridlines in the diagram.
 
 The single uncovered point we're looking for is somewhere in a 3x3 area which is represented by a dotted square. I'll call this area the "search area", in fig. 1 the search area is 3x3 units, but in the actual problem it's *much* larger: 4×10<sup>6</sup> by 4×10<sup>6</sup> units. The origin `(0, 0)` is always located at the bottom left corner of the search area. We'll show some area around the search area to give context, but remember that we're looking for uncovered points *inside* the search area.
 
-In fig. 1 there is a single sensor `A` positioned at `(2, 2)` with a range of `2`. The area covered by `A` is diamond shaped rather than circular. This is because distance is measured by [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry)[^manhattan-distance]. Note that some of the sensors coverage is outside of the search area, this is okay.
+In fig. 1 there is a single sensor `A` positioned at `(2, 2)` with a range of `2`. The area covered by `A` is diamond shaped rather than circular. This is because distance is measured by [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry). Note that some of the sensors coverage is outside of the search area, this is okay.
 
-Finally, there's a green circle at the point `(0, 0)`. This represents the solution to our toy version of the problem. In this case it's easy enough to see visually that this is the only uncovered point. Technically there's a small triangular area which isn't covered containing an infinite number of points, but remember we're only really interested in what happens at integer points. Also note that points on the border of a sensor are considered covered.
+Finally, there's a green circle at the point `(0, 0)`. This represents the solution to our toy version of the problem. In this case it's easy enough to see visually that this is the only uncovered point. Technically there's a small triangular area which isn't covered containing an infinite number of points, but remember we're only really interested in what happens at integer points[^point-coverage]. Also note that points on the border of a sensor are considered covered.
 
-To drive this all home, let's look at a slightly more complicated example
+To drive this all home, let's look at a slightly more complicated example:
 
 # 2.1. A Running Example
-I'll use a running example throught this post:
+I'll use this running example throught this post:
 
 {{<figure src="running-example.svg" width="550px" caption="fig. 2: A running example">}}
 
@@ -82,7 +82,9 @@ I'll use a running example throught this post:
 Now, the input data I get from AoC has 40 sensors (yours may vary), and we're expected to find a solution in a 4×10<sup>6</sup> by 4×10<sup>6</sup> search area. Solving real problems by hand isn't going to cut it. In this post I'm going to discuss a few different approaches to solving this problem and compare their run times. I'll present these approaches in the order that I implemented them.
 
 # 3. Solving via Brute Force
-The brute force approach is simple, here's some [Rust](https://www.rust-lang.org/)y [pseudocode](https://en.wikipedia.org/wiki/Pseudocode)[^pseudocode]:
+The brute force approach is simple, here's some [Rust](https://www.rust-lang.org/)y [pseudocode](https://en.wikipedia.org/wiki/Pseudocode):
+
+> I'll use pseudocode throughout this post to summarise the algorithms I discuss. The pseudocode is not really all that faithful to my actual implementations, it's just a useful tool to concisely explain the high level process.
 
 ```rust
 for x in 0..=4000000 {
@@ -106,7 +108,7 @@ Let's walk through an example, but first some more diagramming conventions:
 - I'll label sensors with a letter when needed for clarity.
 - A black dot indicates a point where a coverage check occurs.
 
-{{<figure src="column-skipping-example.svg" width="550px" caption="fig 3: Solving using column skipping">}}
+{{<figure src="column-skipping-example.svg" width="550px" caption="fig. 3: Solving using column skipping">}}
 
 - We start our search at `(0, 0)`. 
 - The coverage check at `(0, 0)` fails because `(0, 0)` is in `A`.
@@ -119,7 +121,7 @@ Let's walk through an example, but first some more diagramming conventions:
 
 ## 4.1. Running Example: Column Skipping
 
-{{<figure src="running-example-column-skippping.svg" width="550px" caption="fig 4: A total of 6 coverage checks are performed (black dots). We stop once we find the solution.">}}
+{{<figure src="running-example-column-skippping.svg" width="550px" caption="fig. 4: A total of 6 coverage checks are performed (black dots). We stop once we find the solution.">}}
 
 ## 4.2. Pseudocode: Column Skipping
 And here's some pseudocode for good measure:
@@ -164,7 +166,7 @@ We can modify the problem slightly to make it much simpler. Let's forget about M
 
 Here's an example of our simplified version of the problem:
 
-{{<figure src="simplified-example-1.svg" width="600px" caption="fig 5: Example 1 of our simplified problem. Solution at `(2, 2)`.">}}
+{{<figure src="simplified-example-1.svg" width="600px" caption="fig. 5: Example 1 of our simplified problem. Solution at `(2, 2)`.">}}
 
 Going back to our goal—to solve the problem by operating primarily on sensors—we can make a couple of observations:
 
@@ -202,7 +204,7 @@ Okay, so we've found another way to arrive at our solution, but our goal was to 
 
 We can take advantage of this by storing ranges of rows. We can store a beginning and end coordinate to represent a range of values. For example the rows `{0, 1, 2, 3, 4, 5}` can be stored as an inclusive range from 0 through 5 which I will denote as `[0, 5]`. Similarly the rows `{0, 1, 2, 3, 4, 7}` can be stored as a set of ranges `{[0, 4], [7, 7]}`[^range-data-structure].
 
-{{<figure src="simplified-example-2.svg" width="500px" caption="fig 6: Example 2 of our simplified problem. Solution at `(2, 4)`">}}
+{{<figure src="simplified-example-2.svg" width="500px" caption="fig. 6: Example 2 of our simplified problem. Solution at `(2, 4)`">}}
 
 - let `possible_y_values` = `{[0, 5]}`.
 - Iterate over all sets of sensors (excluding some for brevity).
@@ -241,7 +243,7 @@ return possible_y_values.first().start
 ## 5.2 Tackling the Full Problem
 Now we've got that simpler case out of the way, how is it affected when we move onto the full problem? Well, we can use the same approach, however the sensor coverage is no longer axis aligned:
 
-{{<figure src="diamond-range-exclusion.svg" width="600px" caption="fig 7: The ranges of rows `[0, 1]` and `[3, 4]` (shaded green) are covered by sensors, leaving 2 as the solution's y coordinate.">}}
+{{<figure src="diamond-range-exclusion.svg" width="600px" caption="fig. 7: The ranges of rows `[0, 1]` and `[3, 4]` (shaded green) are covered by sensors, leaving 2 as the solution's y coordinate.">}}
 
 Figuring out which rows are covered visually is a bit more difficult with the unaligned sensor coverage; it's a lot more difficult to do algorithmically. Instead of trying to tackle this problem, we can shift our perspective to a more convenient coordinate system.
 
@@ -250,31 +252,31 @@ Figuring out which rows are covered visually is a bit more difficult with the un
 
 Let's start with a single sensor with `range=2` `position=(4, 2)`:
 
-{{<figure src="diagonal-space-example-standard.svg" width="400px" caption="fig 8: A lone sensor at (4, 2)">}}
+{{<figure src="diagonal-space-example-standard.svg" width="400px" caption="fig. 8: A lone sensor at (4, 2)">}}
 
 We can represent this exact situation in a coordinate system that's been scaled, translated, and rotated clockwise by 45°, as shown by the axes in fig. 9. For lack of a better name, I'll call this "diagonal space", I'll denote the diagonal space axes as `x'` and `y'`.
 
-{{<figure src="diagonal-space-example-with-axes.svg" width="550px" caption="fig 9: The sensor from fig 8 with diagonal space axes `x'` and `y'`">}}
+{{<figure src="diagonal-space-example-with-axes.svg" width="550px" caption="fig. 9: The sensor from fig. 8 with diagonal space axes `x'` and `y'`">}}
   
 In this coordinate system, the sensor is located at `(8, 6)`. Also, if you tilt your head, you'll see that the sensor coverage is now axis aligned! Here, I'll do it for you:
 
-{{<figure src="diagonal-space-example-screen-aligned.svg" width="750px" caption="fig 10: fig 9 but with `x'` and `y'` aligned with the screen. Note that the search area is no longer axis-aligned.">}}
+{{<figure src="diagonal-space-example-screen-aligned.svg" width="750px" caption="fig. 10: fig. 9 but with `x'` and `y'` aligned with the screen. Note that the search area is no longer axis-aligned.">}}
 
 In this coordinate system we can mostly reuse the solution from the "simple" version; once we find the solution in diagonal space, we'll need to convert the solution back into the original coordinate system[^coordinate-system]. Unfortunately it's not all roses, there are still some complications we need to deal with. When we changed coordinate system, we gained axis aligned sensors at the cost of an unaligned search area. This is unfortunate, but I think it's worthwhile as it allows us to easily operate on sets of sensors. Before tackling the complications, let's have a look at our go to example.
 
 ### 5.2.2. Running Example in Diagonal Space
-{{<figure src="running-example-diagonal-space.svg" width="750px" caption="fig 11: Our go to example in diagonal space. Tilt your head 45° counterclockwise (or your screen clockwise) and it should look familiar.">}}
+{{<figure src="running-example-diagonal-space.svg" width="750px" caption="fig. 11: Our go to example in diagonal space. Tilt your head 45° counterclockwise (or your screen clockwise) and it should look familiar.">}}
 
 We can see that every row in the solution space is completely covered except for the row `y'=4`. I've annotated the set of sensors which cover each row on the left of the diagram. We see that the approach we took for the simplified problem applies here too.
 
 ### 5.2.3. Complications in Diagonal Space
 In the "simple" version, we relied on the observation that "rows covered by a set of sensors are contiguous" to optimise our storage of `possible_y_values`. We'll keep storing `possible_y_values` as a set of ranges, however we no longer get a *single* contiguous set of rows covered by each sensor set. Let's look at another example to illustrate why:
 
-{{<figure src="diagonal-space-complication-example.svg" width="650px" caption="fig 12: Another example with row coverage annotated on the left. Solution at `(7, 3)` (diagonal space)">}}
+{{<figure src="diagonal-space-complication-example.svg" width="650px" caption="fig. 12: Another example with row coverage annotated on the left. Solution at `(7, 3)` (diagonal space)">}}
 
 In this case we see that the sensor A actually covers two contiguous regions, `[0, 2]` and `[6, 8]`:
 
-{{<figure src="diagonal-space-complication-example-highlighted.svg" width="650px" caption="fig 13: Rows covered by `A` highlighted">}}
+{{<figure src="diagonal-space-complication-example-highlighted.svg" width="650px" caption="fig. 13: Rows covered by `A` highlighted">}}
 
 We need to account for the possibility of 2 contiguous regions of covered rows. This is a bit more complicated, but it doesn't change the overall approach.
 
@@ -334,13 +336,13 @@ We've found two very different approaches to solving this problem, but we're not
 
 We know our solution is unique, so all integer points surrounding the solution must be covered by a sensor (or outside of the search area if the solution is on a border). Let's explore this by looking at some example cases, we'll focus on only the sensors required to cover the 8 coordinates around the solution.
 
-{{<figure src="focus-points.svg" width="300px" caption="fig 14: The 8 points around the solution which we will focus on (marked with x)">}}
+{{<figure src="focus-points.svg" width="300px" caption="fig. 14: The 8 points around the solution which we will focus on (marked with x)">}}
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="intersection-case-1.svg" width="500px" caption="fig 15: Case 1 \"Box\"">}}
-  {{<figure src="intersection-case-2.svg" width="500px" caption="fig 16: Case 2 \"Hall\"">}}
-  {{<figure src="intersection-case-3.svg" width="500px" caption="fig 17: Case 3 \"Flower\"">}}
-  {{<figure src="intersection-case-4.svg" width="500px" caption="fig 18: Case 4 \"Splat\"?">}}
+  {{<figure src="intersection-case-1.svg" width="500px" caption="fig. 15: Case 1 \"Box\"">}}
+  {{<figure src="intersection-case-2.svg" width="500px" caption="fig. 16: Case 2 \"Hall\"">}}
+  {{<figure src="intersection-case-3.svg" width="500px" caption="fig. 17: Case 3 \"Flower\"">}}
+  {{<figure src="intersection-case-4.svg" width="500px" caption="fig. 18: Case 4 \"Splat\"?">}}
 </div>
 
 This isn't an exhaustive list of cases, but it's enough to gain some intuition for the problem. We see that in all cases the solution is always exactly 1 unit away from the border of a sensor. This makes sense, as we've already established that the points adjacent to the solution must be covered.
@@ -348,19 +350,19 @@ This isn't an exhaustive list of cases, but it's enough to gain some intuition f
 If we expand each of our sensors' range by one, then our solution will always be *on* the border of a sensor. Let's redraw these examples with enlarged sensors:
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="intersection-case-1-expanded.svg" caption="fig 19: \"Box\" enlarged" width="500px">}}
-  {{<figure src="intersection-case-2-expanded.svg" caption="fig 20: \"Hall\" enlarged" width="500px">}}
-  {{<figure src="intersection-case-3-expanded.svg" caption="fig 21: \"Flower\" enlarged" width="500px">}}
-  {{<figure src="intersection-case-4-expanded.svg" caption="fig 22: \"Splat\" enlarged" width="500px">}}
+  {{<figure src="intersection-case-1-expanded.svg" caption="fig. 19: \"Box\" enlarged" width="500px">}}
+  {{<figure src="intersection-case-2-expanded.svg" caption="fig. 20: \"Hall\" enlarged" width="500px">}}
+  {{<figure src="intersection-case-3-expanded.svg" caption="fig. 21: \"Flower\" enlarged" width="500px">}}
+  {{<figure src="intersection-case-4-expanded.svg" caption="fig. 22: \"Splat\" enlarged" width="500px">}}
 </div>
 
 We see that the solution is indeed always on the border of the sensor. For this analysis, we really only care about the borders of each sensor nearest the solution. Let's focus on those:
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="local-01-expanded-borders.svg" caption="fig 23: \"Box\" enlarged, nearest borders" width="500px">}}
-  {{<figure src="local-02-expanded-borders.svg" caption="fig 24: \"Hall\" enlarged, nearest borders" width="500px">}}
-  {{<figure src="local-03-expanded-borders.svg" caption="fig 25: \"Flower\" enlarged, nearest borders" width="500px">}}
-  {{<figure src="local-04-expanded-borders.svg" caption="fig 26: \"Splat\" enlarged, nearest borders" width="500px">}}
+  {{<figure src="local-01-expanded-borders.svg" caption="fig. 23: \"Box\" enlarged, nearest borders" width="500px">}}
+  {{<figure src="local-02-expanded-borders.svg" caption="fig. 24: \"Hall\" enlarged, nearest borders" width="500px">}}
+  {{<figure src="local-03-expanded-borders.svg" caption="fig. 25: \"Flower\" enlarged, nearest borders" width="500px">}}
+  {{<figure src="local-04-expanded-borders.svg" caption="fig. 26: \"Splat\" enlarged, nearest borders" width="500px">}}
 </div>
 
 When the borders of sensors intersect at a T or X junction, the intersection is either exactly on an integer point, or it's exactly halfway between them. We'll call these intersections "aligned" or "misaligned" respectively.
@@ -380,8 +382,8 @@ Based on this, we can find solutions by following these steps:
 Let's work through our running sample problem:
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="running-example.svg" width="500px" caption="fig 3 (repeated): Our running example.">}}
-  {{<figure src="running-example-line-intersection.svg" caption="Case 1" width="500px" caption="fig 27: Expanded borders and black dots indicating coverage checks.">}}
+  {{<figure src="running-example.svg" width="500px" caption="fig. 3 (repeated): Our running example.">}}
+  {{<figure src="running-example-line-intersection.svg" caption="Case 1" width="500px" caption="fig. 27: Expanded borders and black dots indicating coverage checks.">}}
 </div>
 
 We see that the solution at `(2, 2)` is on an aligned intersection and will be picked up by a coverage check.
@@ -391,20 +393,20 @@ We see that the solution at `(2, 2)` is on an aligned intersection and will be p
 Now we have some literal edge cases to take care of, let's look at some examples where the solution lies on the edge of the search area:
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="edge-case-1.svg" width="300px" caption="fig 28: Edge case 1">}}
-  {{<figure src="edge-case-2.svg" width="300px" caption="fig 29: Edge case 2">}}
+  {{<figure src="edge-case-1.svg" width="300px" caption="fig. 28: Edge case 1">}}
+  {{<figure src="edge-case-2.svg" width="300px" caption="fig. 29: Edge case 2">}}
 </div>
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="edge-case-1-expanded.svg" width="300px" caption="fig 30: Edge case 1">}}
-  {{<figure src="edge-case-2-expanded.svg" width="300px" caption="fig 31: Edge case 2 expanded">}}
+  {{<figure src="edge-case-1-expanded.svg" width="300px" caption="fig. 30: Edge case 1">}}
+  {{<figure src="edge-case-2-expanded.svg" width="300px" caption="fig. 31: Edge case 2 expanded">}}
 </div>
 
 Fortunately, our assumptions still hold for edge cases. How about corner cases?
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="corner-case.svg" width="350px" caption="fig 32: Corner case 1">}}
-  {{<figure src="corner-case-expanded.svg" width="350px" caption="fig 33: Corner case 1 expanded">}}
+  {{<figure src="corner-case.svg" width="350px" caption="fig. 32: Corner case 1">}}
+  {{<figure src="corner-case-expanded.svg" width="350px" caption="fig. 33: Corner case 1 expanded">}}
 </div>
 
 Nope! Fortunately there are only 4 corners, so we can simply hardcode a coverage check for each corner and we're done!
@@ -447,17 +449,17 @@ for point in points_to_check {
 > In this case `get_intersection_points` and `is_aligned_intersection` is left as an excercise to the reader.
 
 # 7. Closing Thoughts
-At the time of writing I've only completed AoC 2022 days 1 through 15, but this is definitely my favourite problem so far. I had a ton of fun exploring the different approaches and measuring their performance. I think the size of the search area combined with the nature of the problem itself is brilliant. The most basic approach—brute force—is only just too slow[^brute-force], but any optimisation at all allows us to solve the problem in reasonable time, opening the door to many different approaches.
+At the time of writing I've only completed AoC 2022 days 1 through 15, but this is definitely my favourite problem so far. I had a ton of fun exploring the different approaches and measuring their performance. I think the size of the search area combined with the use of Manhattan distance[^manhattan-distance][^chebyshev_distance] makes the problem shine. The most basic approach—brute force—is only just too slow[^brute-force], but any optimisation at all allows us to solve the problem in reasonable time, opening the door to many different approaches.
 
 ## 7.1. Final Visualisations
 
 And finally, here's a visualisation of the actual input I got from AoC[^actual-solution-type]:
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-{{<figure src="final-solution-1.svg" width="500px" caption="fig 34: 6,000,000 x 6,000,000 view">}}
-{{<figure src="final-solution-2.svg" width="500px" caption="fig 35: 1,600,000 x 1,600,000 view">}}
-{{<figure src="final-solution-3.svg" width="500px" caption="fig 36: 800,000 x 800,000 view">}}
-{{<figure src="final-solution-4.svg" width="500px" caption="fig 37: 125 x 125 view">}}
+{{<figure src="final-solution-1.svg" width="500px" caption="fig. 34: 6,000,000 x 6,000,000 view">}}
+{{<figure src="final-solution-2.svg" width="500px" caption="fig. 35: 1,600,000 x 1,600,000 view">}}
+{{<figure src="final-solution-3.svg" width="500px" caption="fig. 36: 800,000 x 800,000 view">}}
+{{<figure src="final-solution-4.svg" width="500px" caption="fig. 37: 125 x 125 view">}}
 </div>
 
 {{<figure src="final-solution-5.svg" width="800px" caption="Only sensors neighbouring the solution">}}
@@ -466,17 +468,24 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 
 > TODO: I haven't done this section yet.
 
+# Footnotes
+
 [^aoc-problem]: 
     You'll also need to solve part 1 to get the part 2 description. Although I'm sure you can find it online somewhere.
 
 [^manhattan-distance]: 
-    In my opinion, the choice to use manhattan distance is what really makes this problem shine. It makes the problem tractible, while at the same time enabling many interesting approaches, as you'll hopefully see. If [Euclidian distance](https://en.wikipedia.org/wiki/Euclidean_distance) was used instead, we'd need to deal [circular sensor coverage](https://en.wikipedia.org/wiki/Gauss_circle_problem). Just for fun, here's another interesting distance metric: [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).
+    If [Euclidian distance](https://en.wikipedia.org/wiki/Euclidean_distance) was used instead, we'd need to deal [circular sensor coverage](https://en.wikipedia.org/wiki/Gauss_circle_problem).
 
-[^point-coverage-count]: 
-    A sensor with range R covers (R+1)<sup>2</sup> + R<sup>2</sup> coordinates. e.g. a sensor with `range=0` covers 1 coordinate, a sensor with `range=3` covers 25. This formula is a little more complicated than you might expect because the square area is not axis aligned. For some intuition behind this formula, have a look at this sensor with `range=2`. It can be broken down into a 3x3 grid (red) and a 2x2 grid (blue). {{<figure src="point-count.svg" width="300px">}} Tangentially related: [Pick's Theorem](https://artofproblemsolving.com/wiki/index.php/Pick%27s_Theorem) relates the area of a polygon with the count of its internal and border [lattice points](#fn:5). TODO: Check this link
+    Another effect of using Manhattan distance is that distances between integer points are always an integers, keeping the solutions free from floating point complications. This is thanks to the fact that the lattice is [closed under addition](https://en.wikipedia.org/wiki/Closure_(mathematics)) and Manhattan distances are calculated using addition.
+
+[^chebyshev_distance]:
+    Just for fun, here's another interesting distance metric: [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).
+
+[^point-coverage]:
+    Irrelevant, but interesting nonetheless: A sensor with range R covers (R+1)<sup>2</sup> + R<sup>2</sup> integer points. e.g. a sensor with `range=0` covers 1 coordinate, a sensor with `range=3` covers 25. This formula is a little more complicated than you might expect because the square area is not axis aligned. For some intuition behind this formula, have a look at this sensor with `range=2`. It can be broken down into a 3x3 grid (red) and a 2x2 grid (blue). {{<figure src="point-count.svg" width="300px">}} Tangentially related: [Pick's Theorem](https://artofproblemsolving.com/wiki/index.php/Pick%27s_Theorem) relates the area of a polygon with the count of its internal and border [lattice points](#fn:2).
 
 [^lattice]: 
-    In writing this post, I've learnt that about [point lattices](https://mathworld.wolfram.com/PointLattice.html). We're essentially dealing with a point lattice here. The integer points we'll be talking about throughout are also known as [lattice points](https://mathworld.wolfram.com/LatticePoint.html).
+    Because everything takes place on integer points, you could say the problem takes place in a [point lattice](https://mathworld.wolfram.com/PointLattice.html). The integer points we'll be talking about throughout are also known as [lattice points](https://mathworld.wolfram.com/LatticePoint.html).
 
 [^inspiration]: 
     Credit where credits due: I couldn't think of anything until I skimmed the [Reddit solution thread](https://old.reddit.com/r/adventofcode/comments/zmcn64). I was trying to skim for inspiration without spoiling for myself. Luckily I saw a mention of rotating the coordinate space (you'll see why this is relevant later) which got me unstuck.
@@ -494,7 +503,7 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
     In my implementation, I actually discard sensor sets where the intersection of the sensor's of y values is empty. These sensor sets can't cover any rows that aren't covered by some subset of the sensors. Doing this dramatically cuts down the number of sensor sets to check. I gloss over this detail for the sake of focusing on the high level aspects, but it's actually critical because there are 2<sup>40</sup> - 1 possible combinations of sensors, the vast majority of which are redundant. If the set of all sensors is `S`, than the sensor sets I discuss in this post are the elements of the  [power set](https://en.wikipedia.org/wiki/Power_set) of `S` (excluding the empty set).
 
 [^coordinate-system]: 
-    In fig 9. I've set up the origin of the "diagonal space" coordinate system so that `y'` and `x'` touch the top left and bottom left corners of the solution space respectively. There's nothing special about this convention, I chose it to make the visualisations neater. Nonetheless, here's some Rust code for converting between the systems using this convention:
+    In fig. 9. I've set up the origin of the "diagonal space" coordinate system so that `y'` and `x'` touch the top left and bottom left corners of the solution space respectively. There's nothing special about this convention, I chose it to make the visualisations neater. Nonetheless, here's some Rust code for converting between the systems using this convention:
     
     ```rust
     // `dimension` is the width of the search area.
@@ -516,9 +525,6 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 
     A simpler convention would leave the origin at the bottom left corner of the search area in both coordinate systems. This would make the conversion functions simpler and remove the dependency on `dimension` for conversions.
 
-[^pseudocode]:
-    I'll use pseudocode throughout this post to summarise the algorithms I discuss. The pseudocode is not really all that faithful to my actual implementations, it's just a useful tool to concisely explain the high level process.
-
 [^range-exclusion-optimisation]:
     After finding the solution for y, we can shortcut the x coordinate. Now that we know the exact y value for the solution, it's sufficient to consider sensors one at a time instead of sets of sensors.
 
@@ -526,7 +532,7 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
     In my implementation I store a set of ranges as a [dynamic array](https://en.wikipedia.org/wiki/Dynamic_array) ([Rust Vec](https://doc.rust-lang.org/std/vec/struct.Vec.html)) of integer [2-tuples](https://en.wikipedia.org/wiki/Ordered_pair). I'm sure I could use a more efficient data structure. Perhaps an [interval tree](https://en.wikipedia.org/wiki/Interval_tree), I'm not sure?
 
 [^actual-solution-type]:
-    In my case it's a "Box" type solution (see fig 15). I'm not sure if this is the case for everyone.
+    In my case it's a "Box" type solution (see fig. 15). I'm not sure if this is the case for everyone.
 
 [^brute-force]:
     Actually, some people did [brute force](https://www.reddit.com/r/adventofcode/comments/zmcn64/comment/j0rjkbk/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) it on a GPU, which is pretty cool.
