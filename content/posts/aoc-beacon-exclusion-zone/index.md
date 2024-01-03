@@ -1,9 +1,9 @@
 ---
-# title: "Spending an Unreasonable Amount on a Single AoC Problem"
-# title: "1 Year Into a Single AoC Problem: Beacon Exclusion Zone"
-title: "Advent of Code 2022 - Beacon Exclusion Zone: 1 Year Later"
+title: "Spending an Unreasonable Amount of Time on Advent of Code: \"Beacon Exclusion Zone\""
 date: 2023-12-31
 author: Gian Hancock
+toc: true
+skipRss: true
 ---
 
 > NOTE:
@@ -12,7 +12,8 @@ author: Gian Hancock
 > 
 > TODO:
 > # Pre Publish
-> - [ ] Review title and URL. Make note of how late the blog post is.
+> - [ ] Spell check
+> - [x] Review title and URL. Make note of how late the blog post is.
 > - [ ] Make sure website RSS feed works
 > - [ ] gianhancock.com domain
 > - [ ] Complete all inline TODOs
@@ -27,14 +28,16 @@ author: Gian Hancock
 > - [ ] Implement proper asides rather than using blockquotes
 > - [ ] Implement readable implementations of each approach
 > - [ ] Consider switching from Hugo to Zola
->   - [ ] Table of contents
+>   - [x] Table of contents
 
-# 1. Advent of Code
+## 1. Advent of Code
 [Advent of Code](https://adventofcode.com/2022/about) (abbreviated AoC) is an annual Advent calendar of small programming puzzles. There's a programming puzzle for each day in the calandar, accompanied by a story which ties the problems together.
 
-After hearing about AoC from some friends, I decided to give it a go. About halfway through I came across a problem which I thought was particularly interesting: [Day 15: Beacon Exclusion Zone](https://adventofcode.com/2022/day/15).
+After hearing about AoC from some friends in 2022, I decided to give it a go. About halfway through I came across a problem which I thought was particularly interesting: [Day 15: Beacon Exclusion Zone](https://adventofcode.com/2022/day/15). It's now more than a year later, AoC 2023 has just concluded, and I'm finally getting around to publishing this... better late than never! 
 
-# 2. The Problem
+In this post I'm going to discuss 3 different approaches to solving this problem and compare their performance. I hope you'll find this problem as interesting as I did.
+
+## 2. The Problem
 AoC problems come in two parts, with the second part building on the first. I want to focus on the aspects that I found most interesting, so I'm going to skip straight to the second part and gloss over some minor details. To get the full experience complete with [Excuse Plot](https://tvtropes.org/pmwiki/pmwiki.php/Main/ExcusePlot) and all, you'll need to look at the actual AoC problem description[^aoc-problem].
 
 The general idea is that there are a bunch of "sensors" which are used to detect "beacons". Sensors have a position and range, and are arranged such that all but one point is covered by at least one sensor. Our task is to find the single point which isn't covered by any sensors.
@@ -53,7 +56,7 @@ Finally, there's a green circle at the point `(0, 0)`. This represents the solut
 
 To drive this all home, let's look at a slightly more complicated example:
 
-# 2.1. A Running Example
+### 2.1. A Running Example
 I'll use this running example throught this post:
 
 {{<figure src="running-example.svg" width="550px" caption="fig. 2: A running example">}}
@@ -69,7 +72,7 @@ I'll use this running example throught this post:
 
 Now, the input data I get from AoC has 40 sensors (yours may vary), and we're expected to find a solution in a 4×10<sup>6</sup> by 4×10<sup>6</sup> search area. Solving real problems by hand isn't going to cut it. In this post I'm going to discuss a few different approaches to solving this problem and compare their run times. I'll present these approaches in the order that I implemented them.
 
-# 3. Solving via Brute Force
+## 3. Solving via Brute Force
 The brute force approach is simple, here's some [Rust](https://www.rust-lang.org/)y [pseudocode](https://en.wikipedia.org/wiki/Pseudocode):
 
 > I'll use pseudocode throughout this post to summarise the algorithms I discuss. The pseudocode is not really all that faithful to my actual implementations, it's just a useful tool to concisely explain the high level process.
@@ -89,7 +92,7 @@ for x in 0..=4000000 {
 
 Easy... except it takes so long to run that I've never been able to get solutions to full sized problems with it. Our search area contains 1.6×10<sup>13</sup> integer points. On my machine I can check 5.3×10<sup>7</sup> points/s, extrapolating gives an estimated run time of 3.5 days in the worst case. Better than solving by hand, but still not good enough.
 
-# 4. Solving With Column Skipping
+## 4. Solving With Column Skipping
 With the brute force approach, the primary operation is checking whether a point is covered by any sensors—I'll call this operation a "coverage check". We can speed things up by performing fewer coverage checks. Our brute force code scans across each row, column by column. Instead, once we hit a sensor for the first time, we can take one large step across all columns that are within range of that sensor.
 
 Let's walk through an example, but first some more diagramming conventions:
@@ -107,11 +110,11 @@ Let's walk through an example, but first some more diagramming conventions:
 - We repeat this process, eventually landing on `(0, 4)`.
 - `(0, 4)` passes the coverage check. This is our solution.
 
-## 4.1. Running Example: Column Skipping
+### 4.1. Running Example: Column Skipping
 
 {{<figure src="running-example-column-skippping.svg" width="550px" caption="fig. 4: A total of 6 coverage checks are performed (black dots). We stop once we find the solution.">}}
 
-## 4.2. Pseudocode: Column Skipping
+### 4.2. Pseudocode: Column Skipping
 And here's some pseudocode for good measure:
 
 ```rust
@@ -134,7 +137,7 @@ for x in 0..=4000000 {
 
 > TODO: Link to implementation
 
-## 4.3. Summary and Performance: Column Skipping
+### 4.3. Summary and Performance: Column Skipping
 
 I found this approach surprisingly effective—at least it was surprising to me. The runtime has gone from approximately 3.5 days to 227ms on my machine, a factor of 1.3×10<sup>6</sup> improvement. 
 
@@ -142,14 +145,14 @@ Thinking about this critically for a moment: with the brute force method we perf
 
 I think 227ms is "good enough", but can we do better?
 
-# 5. A Different Approach: "Range Exclusion"
+## 5. A Different Approach: "Range Exclusion"
 Now, remember that the input data I got from AoC only has 40 sensors. That's miniscule compared to the 4×10<sup>6</sup> rows in our search area.
 
 Perhaps we can find an algorithm which operates primarily on sensors. Even a bad algorithm operating on 40 sensors is likely to be faster than a good algorithm operating on 4×10<sup>6</sup> points.
 
 After some thought (and cheating[^inspiration]) I managed to find a way to solve the problem by iteratively ruling out sections of the search area. It's a bit tough to explain, and there are some fiddly details to work out, so let's start with a simplified version of the problem.
 
-## 5.1 A Simplified Problem
+### 5.1 A Simplified Problem
 We can modify the problem slightly to make it much simpler. Let's forget about Manhattan distances for now; instead, each sensor will cover a rectangular area of the 2D grid. As we'll see soon, this simplifies the problem because it makes everything axis aligned.
 
 Here's an example of our simplified version of the problem:
@@ -228,7 +231,7 @@ return possible_y_values.first().start
 
 > TODO: Include link to source code.
 
-## 5.2 Tackling the Full Problem
+### 5.2 Tackling the Full Problem
 Now we've got that simpler case out of the way, how is it affected when we move onto the full problem? Well, we can use the same approach, however the sensor coverage is no longer axis aligned:
 
 {{<figure src="diamond-range-exclusion.svg" width="600px" caption="fig. 7: The ranges of rows `[0, 1]` and `[3, 4]` (shaded green) are covered by sensors, leaving 2 as the solution's y coordinate.">}}
@@ -236,7 +239,7 @@ Now we've got that simpler case out of the way, how is it affected when we move 
 Figuring out which rows are covered visually is a bit more difficult with the unaligned sensor coverage; it's a lot more difficult to do algorithmically. Instead of trying to tackle this problem, we can shift our perspective to a more convenient coordinate system.
 
 
-### 5.2.1. Introducing "Diagonal Space"
+#### 5.2.1. Introducing "Diagonal Space"
 
 Let's start with a single sensor with `range=2` `position=(4, 2)`:
 
@@ -252,12 +255,12 @@ In this coordinate system, the sensor is located at `(8, 6)`. Also, if you tilt 
 
 In this coordinate system we can mostly reuse the solution from the "simple" version; once we find the solution in diagonal space, we'll need to convert the solution back into the original coordinate system[^coordinate-system]. Unfortunately it's not all roses, there are still some complications we need to deal with. When we changed coordinate system, we gained axis aligned sensors at the cost of an unaligned search area. This is unfortunate, but I think it's worthwhile as it allows us to easily operate on sets of sensors. Before tackling the complications, let's have a look at our go to example.
 
-### 5.2.2. Running Example in Diagonal Space
+#### 5.2.2. Running Example in Diagonal Space
 {{<figure src="running-example-diagonal-space.svg" width="750px" caption="fig. 11: Our go to example in diagonal space. Tilt your head 45° counterclockwise (or your screen clockwise) and it should look familiar.">}}
 
 We can see that every row in the solution space is completely covered except for the row `y'=4`. I've annotated the set of sensors which cover each row on the left of the diagram. We see that the approach we took for the simplified problem applies here too.
 
-### 5.2.3. Complications in Diagonal Space
+#### 5.2.3. Complications in Diagonal Space
 In the "simple" version, we relied on the observation that "rows covered by a set of sensors are contiguous" to optimise our storage of `possible_y_values`. We'll keep storing `possible_y_values` as a set of ranges, however we no longer get a *single* contiguous set of rows covered by each sensor set. Let's look at another example to illustrate why:
 
 {{<figure src="diagonal-space-complication-example.svg" width="650px" caption="fig. 12: Another example with row coverage annotated on the left. Solution at `(7, 3)` (diagonal space)">}}
@@ -268,7 +271,7 @@ In this case we see that the sensor A actually covers two contiguous regions, `[
 
 We need to account for the possibility of 2 contiguous regions of covered rows. This is a bit more complicated, but it doesn't change the overall approach.
 
-## 5.3. Pseudocode: Range Exclusion
+### 5.3. Pseudocode: Range Exclusion
 Finally, here's our pseudocode for getting the y coordinate of the solution, it's very similar to the previous version:
 
 ```rust
@@ -312,15 +315,15 @@ return diagonal_to_rectangular_space(diagonal_space_solution);
 
 We do a bit of converting back and forth from standard to diagonal space and we handle multiple ranges for each for each sensor set. Otherwise it's the same as the previous version.
 
-## 5.4. Summary and Performance: Range Exclusion
+### 5.4. Summary and Performance: Range Exclusion
 
 > TODO: I haven't done this yet.
 
-# 6. Yet Another Approach: "Line Intersection"
+## 6. Yet Another Approach: "Line Intersection"
 
 We've found two very different approaches to solving this problem, but we're not done yet! There's another approach we can tackle which is based on taking advantage of the properties of the sensors near the solution[^inspiration-2].
 
-## 6.1. Exploring Patterns Around the Solution
+### 6.1. Exploring Patterns Around the Solution
 
 We know our solution is unique, so all integer points surrounding the solution must be covered by a sensor (or outside of the search area if the solution is on a border). Let's explore this by looking at some example cases, we'll focus on only the sensors required to cover the 8 coordinates around the solution.
 
@@ -365,7 +368,7 @@ Based on this, we can find solutions by following these steps:
 
  The number of intersections is a function of the positon and number of sensors—but not the size of the search area—so this will scale well as the search area grows.
 
-## 6.2. Running Example: Line Intersection
+### 6.2. Running Example: Line Intersection
 
 Let's work through our running sample problem:
 
@@ -376,7 +379,7 @@ Let's work through our running sample problem:
 
 We see that the solution at `(2, 2)` is on an aligned intersection and will be picked up by a coverage check.
 
-## 6.3. Corner and Edge Cases
+### 6.3. Corner and Edge Cases
 
 Now we have some literal edge cases to take care of, let's look at some examples where the solution lies on the edge of the search area:
 
@@ -399,7 +402,7 @@ Fortunately, our assumptions still hold for edge cases. How about corner cases?
 
 Nope! Fortunately there are only 4 corners, so we can simply hardcode a coverage check for each corner and we're done!
 
-## 6.4. Pseudocode: Line Intersection
+### 6.4. Pseudocode: Line Intersection
 
 Here's the final pseudocode:
 
@@ -430,16 +433,16 @@ for point in points_to_check {
 }
 ```
 
-## 6.5. Summary and Performance: Line Intersection
+### 6.5. Summary and Performance: Line Intersection
 
 > TODO: I haven't done this section yet.
 
 > In this case `get_intersection_points` and `is_aligned_intersection` is left as an excercise to the reader.
 
-# 7. Closing Thoughts
+## 7. Closing Thoughts
 At the time of writing I've only completed AoC 2022 days 1 through 15, but this is definitely my favourite problem so far. I had a ton of fun exploring the different approaches and measuring their performance. I think the size of the search area combined with the use of Manhattan distance[^manhattan-distance][^chebyshev_distance] makes the problem shine. The most basic approach—brute force—is only just too slow[^brute-force], but any optimisation at all allows us to solve the problem in reasonable time, opening the door to many different approaches.
 
-## 7.1. Final Visualisations
+### 7.1. Final Visualisations
 
 And finally, here's a visualisation of the actual input I got from AoC[^actual-solution-type]:
 
@@ -452,11 +455,11 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 
 {{<figure src="final-solution-5.svg" width="800px" caption="fig. 38: Only sensors neighbouring the solution">}}
 
-# 7.2. Performance Comparison
+## 7.2. Performance Comparison
 
 > TODO: I haven't done this section yet.
 
-# Footnotes
+## 8. Footnotes
 
 [^aoc-problem]: 
     You'll also need to solve part 1 to get the part 2 description. Although I'm sure you can find it online somewhere.
