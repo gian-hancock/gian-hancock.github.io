@@ -12,15 +12,15 @@ skipRss: true
 > 
 > TODO:
 > # Pre Publish
-> - [ ] Spell check
+> - [x] Spell check
 > - [x] Review title and URL. Make note of how late the blog post is.
 > - [x] Make sure website RSS feed works
+> - [x] Double check title numbering
 > - [ ] gianhancock.com domain
 > - [ ] Complete all inline TODOs
 > - [ ] Add proper performance numbers for all approaches, add a table at the end including manhattan distance counts
 > - [ ] Clean up source code and diagrams in repo
 > - [ ] Fix implementation coordinate spaces with swapped `x'` `y'` axes and off by one.
-> - [ ] Double check title numbering
 > - [ ] Set up Github Discussions
 > - [ ] https://giscus.app/
 > - [ ] Make sure website appears nicely on Feedly 
@@ -31,7 +31,7 @@ skipRss: true
 >   - [x] Table of contents
 
 ## 1. Advent of Code
-[Advent of Code](https://adventofcode.com/2022/about) (abbreviated AoC) is an annual Advent calendar of small programming puzzles. There's a programming puzzle for each day in the calandar, accompanied by a story which ties the problems together.
+[Advent of Code](https://adventofcode.com/2022/about) (abbreviated AoC) is an annual Advent calendar of small programming puzzles. There's a programming puzzle for each day in the calendar, accompanied by a story which ties the problems together.
 
 After hearing about AoC from some friends in 2022, I decided to give it a go. About halfway through I came across a problem which I thought was particularly interesting: [Day 15: Beacon Exclusion Zone](https://adventofcode.com/2022/day/15). It's now more than a year later, AoC 2023 has just concluded, and I'm finally getting around to publishing this... better late than never! 
 
@@ -40,24 +40,24 @@ In this post I'm going to discuss 3 different approaches to solving this problem
 ## 2. The Problem
 AoC problems come in two parts, with the second part building on the first. I want to focus on the aspects that I found most interesting, so I'm going to skip straight to the second part and gloss over some minor details. To get the full experience complete with [Excuse Plot](https://tvtropes.org/pmwiki/pmwiki.php/Main/ExcusePlot) and all, you'll need to look at the actual AoC problem description[^aoc-problem].
 
-The general idea is that there are a bunch of "sensors" which are used to detect "beacons". Sensors have a position and range, and are arranged such that all but one point is covered by at least one sensor. Our task is to find the single point which isn't covered by any sensors.
+The general idea is that there are a bunch of "sensors" which are used to detect "beacons". Sensors have a position and range and are arranged such that all but one point is covered by at least one sensor. Our task is to find the single point which isn't covered by any sensors.
 
 I'll start with a diagram, and I'll attempt to explain how to interpret it from there:
 
 {{<figure src="trivial-example.svg" width="400px" caption="fig. 1: A trivial example">}}
 
-The problem takes place on a 2D grid, I've placed gridlines at 1 unit intervals in the diagram to help visualise the scale and position of things. In general, all the action takes place at "integer points", which are points with integer coordinates e.g. `(0, 0)`, `(1, 2)`, `(3, 4)`, etc[^lattice]. Each integer point occurs at the intersection of two gridlines in the diagram.
+The problem takes place on a 2D grid, I've placed gridlines at 1-unit intervals in the diagram to help visualise the scale and position of things. In general, all the action takes place at "integer points", which are points with integer coordinates e.g. `(0, 0)`, `(1, 2)`, `(3, 4)`, etc[^lattice]. Each integer point occurs at the intersection of two gridlines in the diagram.
 
-In the real problem, the single uncovered point is always located somewhere in a 4×10<sup>6</sup> by 4×10<sup>6</sup> unit area, which I'll call the "search area". For this example, a small 3x3 search area suffice. The origin `(0, 0)` is always located at the bottom left corner of the search area. I'll show some area around the search area to give context, but remember that we're looking for uncovered points *inside* the search area.
+In the real problem, the single uncovered point is always found somewhere in a 4×10<sup>6</sup> by 4×10<sup>6</sup> unit area, which I'll call the "search area". For this example, a small 3x3 search area suffice. The origin `(0, 0)` is always located at the bottom left corner of the search area. I'll show some area around the search area to give context, but remember that we're looking for uncovered points *inside* the search area.
 
-In fig. 1 there is a single sensor `A` positioned at `(2, 2)` with a range of `3`. The area covered by `A` is diamond shaped rather than circular. This is because distance is measured by [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry). Note that some of the sensors coverage is outside of the search area, this is okay. In the real problem, we get a text file specifying the position and range of each sensor[^oversimplification]. The search area is always 4×10<sup>6</sup> by 4×10<sup>6</sup> units.
+In fig. 1 there is a single sensor `A` positioned at `(2, 2)` with a range of `3`. The area covered by `A` is diamond shaped rather than circular. This is because distance is measured by [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry). Note that some of the sensor's coverage is outside of the search area, this is okay. In the real problem, we get a text file specifying the position and range of each sensor[^oversimplification]. The search area is always 4×10<sup>6</sup> by 4×10<sup>6</sup> units.
 
 Finally, there's a green circle at the point `(0, 0)`. This represents the solution to our toy version of the problem (its position of at the origin is just a coincidence). In this case it's easy enough to see visually that this is the only uncovered point. Technically there's a small triangular area which isn't covered containing an infinite number of points, but remember we're only really interested in what happens at integer points[^point-coverage]. Also note that points on the border of a sensor are considered covered.
 
 To drive this all home, let's look at a slightly more complicated example:
 
 ### 2.1. A Running Example
-I'll use this running example throught this post:
+I'll use this running example throughout this post:
 
 {{<figure src="running-example.svg" width="550px" caption="fig. 2: A running example">}}
 
@@ -75,7 +75,7 @@ Now, the input data I get from AoC has 40 sensors (yours may vary), and we're ex
 ## 3. Solving via Brute Force
 The brute force approach is simple, here's some [Rust](https://www.rust-lang.org/)y [pseudocode](https://en.wikipedia.org/wiki/Pseudocode):
 
-> I'll use pseudocode throughout this post to summarise the algorithms I discuss. The pseudocode is not really all that faithful to my actual implementations, it's just a useful tool to concisely explain the high level process.
+> I'll use pseudocode throughout this post to summarise the algorithms I discuss. The pseudocode is not really all that faithful to my actual implementations, it's just a useful tool to concisely explain the high-level process.
 
 ```rust
 for x in 0..=4000000 {
@@ -112,7 +112,7 @@ Let's walk through an example, but first some more diagramming conventions:
 
 ### 4.1. Running Example: Column Skipping
 
-{{<figure src="running-example-column-skippping.svg" width="550px" caption="fig. 4: A total of 6 coverage checks are performed (black dots). We stop once we find the solution.">}}
+{{<figure src="running-example-column-skipping.svg" width="550px" caption="fig. 4: A total of 6 coverage checks are performed (black dots). We stop once we find the solution.">}}
 
 ### 4.2. Pseudocode: Column Skipping
 And here's some pseudocode for good measure:
@@ -133,7 +133,7 @@ for x in 0..=4000000 {
 }
 ```
 
-> The exact workings of `get_next_x()` is left as an excerise for the reader. The important thing is that it's a constant time operation based on the sensors position, range, and the current row.
+> The exact workings of `get_next_x()` is left as an exercise for the reader. The important thing is that it's a constant time operation based on the sensors position, range, and the current row.
 
 > TODO: Link to implementation
 
@@ -141,7 +141,7 @@ for x in 0..=4000000 {
 
 I found this approach surprisingly effective—at least it was surprising to me. The runtime has gone from approximately 3.5 days to 227ms on my machine, a factor of 1.3×10<sup>6</sup> improvement. 
 
-Thinking about this critically for a moment: with the brute force method we perform 4×10<sup>6</sup> coverage checks for each row, now we only need around 2 (based on our worked example). Roughly speaking we'd expect a factor of 2×10<sup>6</sup> speedup, so in hindsight I shouldn't have been surprised afterall.
+Thinking about this critically for a moment: with the brute force method we perform 4×10<sup>6</sup> coverage checks for each row, now we only need around 2 (based on our worked example). Roughly speaking we'd expect a factor of 2×10<sup>6</sup> speedup, so in hindsight I shouldn't have been surprised after all.
 
 I think 227ms is "good enough", but can we do better?
 
@@ -189,11 +189,11 @@ Let's step through this using the example above:
 
 We can get the x coordinate by repeating this process for columns instead of rows[^range-exclusion-optimisation], in this case we would also get the value of `2` for x. This leaves us with the final solution of `(2, 2)`.
 
-Okay, so we've found another way to arrive at our solution, but our goal was to do so while avoiding any sort of iteration over points or rows, did we achieve this? Well, it depends... we're certainly not performing coverage checks on a per-point or per-row basis any more, we're not performing coverage checks at all. However we *are* storing rows in `possible_y_values`. To make it worse, `possible_y_values` contains *every* row at the beginning of the process. Storing all 4×10<sup>6</sup> rows seems contradictory to our goal, but all is not lost thanks to an observation we made earlier:
+Okay, so we've found another way to arrive at our solution, but our goal was to do so while avoiding any sort of iteration over points or rows, did we achieve this? Well, it depends... we're certainly not performing coverage checks on a per-point or per-row basis anymore, we're not performing coverage checks at all. However, we *are* storing rows in `possible_y_values`. To make it worse, `possible_y_values` contains *every* row at the beginning of the process. Storing all 4×10<sup>6</sup> rows seems contradictory to our goal, but all is not lost thanks to an observation we made earlier:
 
 > The rows covered by a set of sensors will always be contiguous.
 
-We can take advantage of this by storing ranges of rows. We can store a beginning and end coordinate to represent a range of values. For example the rows `{0, 1, 2, 3, 4, 5}` can be stored as an inclusive range from 0 through 5 which I will denote as `[0, 5]`. Similarly the rows `{0, 1, 2, 3, 4, 7}` can be stored as a set of ranges `{[0, 4], [7, 7]}`[^range-data-structure].
+We can take advantage of this by storing ranges of rows. We can store a beginning and end coordinate to represent a range of values. For example, the rows `{0, 1, 2, 3, 4, 5}` can be stored as an inclusive range from 0 through 5 which I will denote as `[0, 5]`. Similarly, the rows `{0, 1, 2, 3, 4, 7}` can be stored as a set of ranges `{[0, 4], [7, 7]}`[^range-data-structure].
 
 {{<figure src="simplified-example-2.svg" width="500px" caption="fig. 6: Example 2 of our simplified problem. Solution at `(2, 4)`">}}
 
@@ -227,7 +227,7 @@ for sensor_set in get_sensor_sets() {
 return possible_y_values.first().start
 ```
 
-> The finer details of how to implement `get_sensor_sets()`, `get_covered_y_range()`, and `subtract_range()` are omitted for brevity. This is admittedly a cop out because they aren't completely trivial to implement, however I don't want to distract from the main point, which is the higher level aspects of the algorithm. 
+> The finer details of how to implement `get_sensor_sets()`, `get_covered_y_range()`, and `subtract_range()` are omitted for brevity. This is admittedly a cop out because they aren't completely trivial to implement, however I don't want to distract from the main point, which is the higher-level aspects of the algorithm. 
 
 > TODO: Include link to source code.
 
@@ -251,9 +251,9 @@ We can represent this exact situation in a coordinate system that's been scaled,
   
 In this coordinate system, the sensor is located at `(8, 6)`. Also, if you tilt your head, you'll see that the sensor coverage is now axis aligned! Here, I'll do it for you:
 
-{{<figure src="diagonal-space-example-screen-aligned.svg" width="750px" caption="fig. 10: fig. 9 but with `x'` and `y'` aligned with the screen. Note that the search area is no longer axis-aligned.">}}
+{{<figure src="diagonal-space-example-screen-aligned.svg" width="750px" caption="fig. 10: fig. 9 but with `x'` and `y'` aligned with the screen. Note that the search area is no longer axis aligned.">}}
 
-In this coordinate system we can mostly reuse the solution from the "simple" version; once we find the solution in diagonal space, we'll need to convert the solution back into the original coordinate system[^coordinate-system]. Unfortunately it's not all roses, there are still some complications we need to deal with. When we changed coordinate system, we gained axis aligned sensors at the cost of an unaligned search area. This is unfortunate, but I think it's worthwhile as it allows us to easily operate on sets of sensors. Before tackling the complications, let's have a look at our go to example.
+In this coordinate system we can mostly reuse the solution from the "simple" version; once we find the solution in diagonal space, we'll need to convert the solution back into the original coordinate system[^coordinate-system]. Unfortunately, it's not all roses, there are still some complications we need to deal with. When we changed coordinate system, we gained axis aligned sensors at the cost of an unaligned search area. This is unfortunate, but I think it's worthwhile as it allows us to easily operate on sets of sensors. Before tackling the complications, let's have a look at our go to example.
 
 #### 5.2.2. Running Example in Diagonal Space
 {{<figure src="running-example-diagonal-space.svg" width="750px" caption="fig. 11: Our go to example in diagonal space. Tilt your head 45° counterclockwise (or your screen clockwise) and it should look familiar.">}}
@@ -313,7 +313,7 @@ return diagonal_to_rectangular_space(diagonal_space_solution);
 ```
 > TODO: Link to implementation
 
-We do a bit of converting back and forth from standard to diagonal space and we handle multiple ranges for each for each sensor set. Otherwise it's the same as the previous version.
+We do a bit of converting back and forth from standard to diagonal space and we handle multiple ranges for each for each sensor set. Otherwise, it's the same as the previous version.
 
 ### 5.4. Summary and Performance: Range Exclusion
 
@@ -358,7 +358,7 @@ We see that the solution is indeed always on the border of the sensor. For this 
 
 When the borders of sensors intersect at a T or X junction, the intersection is either exactly on an integer point, or it's exactly halfway between them. We'll call these intersections "aligned" or "misaligned" respectively.
 
-In the "Box", "Flower", and "Splat" cases, the solution lies on an aligned intersection. In the "Hallway" case, the intersection is adjacent to a misaligned intersecton. The solution is always either on an aligned intersection or adjacent to a misaligned one.
+In the "Box", "Flower", and "Splat" cases, the solution lies on an aligned intersection. In the "Hallway" case, the intersection is adjacent to a misaligned intersection. The solution is always either on an aligned intersection or adjacent to a misaligned one.
 
 Based on this, we can find solutions by following these steps:
 - Enlarge the sensors' ranges by 1.
@@ -366,7 +366,7 @@ Based on this, we can find solutions by following these steps:
 - At each intersection aligned intersection, perform a coverage check.
 - For each misaligned intersection, perform a coverage check on each of the 4 adjacent integer points.
 
- The number of intersections is a function of the positon and number of sensors—but not the size of the search area—so this will scale well as the search area grows.
+ The number of intersections is a function of the position and number of sensors—but not the size of the search area—so this will scale well as the search area grows.
 
 ### 6.2. Running Example: Line Intersection
 
@@ -400,7 +400,7 @@ Fortunately, our assumptions still hold for edge cases. How about corner cases?
   {{<figure src="corner-case-expanded.svg" width="350px" caption="fig. 33: Corner case 1 expanded">}}
 </div>
 
-Nope! Fortunately there are only 4 corners, so we can simply hardcode a coverage check for each corner and we're done!
+Nope! Fortunately, there are only 4 corners, so we can simply hardcode a coverage check for each corner and we're done!
 
 ### 6.4. Pseudocode: Line Intersection
 
@@ -437,10 +437,10 @@ for point in points_to_check {
 
 > TODO: I haven't done this section yet.
 
-> In this case `get_intersection_points` and `is_aligned_intersection` is left as an excercise to the reader.
+> In this case `get_intersection_points` and `is_aligned_intersection` is left as an exercise to the reader.
 
 ## 7. Closing Thoughts
-At the time of writing I've only completed AoC 2022 days 1 through 15, but this is definitely my favourite problem so far. I had a ton of fun exploring the different approaches and measuring their performance. I think the size of the search area combined with the use of Manhattan distance[^manhattan-distance][^chebyshev_distance] makes the problem shine. The most basic approach—brute force—is only just too slow[^brute-force], but any optimisation at all allows us to solve the problem in reasonable time, opening the door to many different approaches.
+At the time of writing, I've only completed AoC 2022 days 1 through 15, but this is definitely my favourite problem so far. I had a ton of fun exploring the different approaches and measuring their performance. I think the size of the search area combined with the use of Manhattan distance[^manhattan-distance][^chebyshev_distance] makes the problem shine. The most basic approach—brute force—is only just too slow[^brute-force], but any optimisation at all allows us to solve the problem in reasonable time, opening the door to many different approaches.
 
 ### 7.1. Final Visualisations
 
@@ -455,7 +455,7 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 
 {{<figure src="final-solution-5.svg" width="800px" caption="fig. 38: Only sensors neighbouring the solution">}}
 
-## 7.2. Performance Comparison
+### 7.2. Performance Comparison
 
 > TODO: I haven't done this section yet.
 
@@ -467,7 +467,7 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 [^manhattan-distance]: 
     If [Euclidian distance](https://en.wikipedia.org/wiki/Euclidean_distance) was used instead, we'd need to deal [circular sensor coverage](https://en.wikipedia.org/wiki/Gauss_circle_problem).
 
-    Another effect of using Manhattan distance is that distances between integer points are always an integers, keeping the solutions free from floating point complications. This is thanks to the fact that the lattice is [closed under addition](https://en.wikipedia.org/wiki/Closure_(mathematics)) and Manhattan distances are calculated using addition.
+    Another effect of using Manhattan distance is that the distance between two integer points is always an integer, keeping the solutions free from floating point complications. This is thanks to the fact that the lattice is [closed under addition](https://en.wikipedia.org/wiki/Closure_(mathematics)) and Manhattan distances are calculated using addition.
 
 [^chebyshev_distance]:
     Just for fun, here's another interesting distance metric: [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).
@@ -482,16 +482,16 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
     Credit where credits due: I couldn't think of anything until I skimmed the [Reddit solution thread](https://old.reddit.com/r/adventofcode/comments/zmcn64). I was trying to skim for inspiration without spoiling for myself. Luckily I saw a mention of rotating the coordinate space (you'll see why this is relevant later) which got me unstuck.
 
 [^inspiration-2]:
-    Once again, credit to the [Reddit solution thread](https://old.reddit.com/r/adventofcode/comments/zmcn64). Skimming this thread I saw a couple of references to line intersections which got me started on this approach.
+    Once again, credit to the [Reddit solution thread](https://old.reddit.com/r/adventofcode/comments/zmcn64). Skimming this thread, I saw a couple of references to line intersections which got me started on this approach.
 
 [^closed-addition]: 
-    Another affect of using Manhattan distance is that distances between integer points is always an integer. This is thanks to the fact that Manhattan distances are calculated using only additon, and lattices are [closed under addition](https://en.wikipedia.org/wiki/Closure_(mathematics)).
+    Another effect of using Manhattan distance is that distances between integer points is always an integer. This is thanks to the fact that Manhattan distances are calculated using only addition, and lattices are [closed under addition](https://en.wikipedia.org/wiki/Closure_(mathematics)).
 
 [^inspiration]: 
     Credit where credits due: I couldn't think of anything until I skimmed the [Reddit solution thread](https://old.reddit.com/r/adventofcode/comments/zmcn64). I was trying to skim for inspiration without spoiling for myself. Luckily I saw a mention of rotating the coordinate space (you'll see why this is relevant later) which got me unstuck.
 
 [^empty-sensor-sets]: 
-    In my implementation, I actually discard sensor sets where the intersection of the sensor's of y values is empty. These sensor sets can't cover any rows that aren't covered by some subset of the sensors. Doing this dramatically cuts down the number of sensor sets to check. I gloss over this detail for the sake of focusing on the high level aspects, but it's actually critical because there are 2<sup>40</sup> - 1 possible combinations of sensors, the vast majority of which are redundant. If the set of all sensors is `S`, than the sensor sets I discuss in this post are the elements of the  [power set](https://en.wikipedia.org/wiki/Power_set) of `S` (excluding the empty set).
+    In my implementation, I actually discard sensor sets where the intersection of the sensor's y values is empty. These sensor sets can't cover any rows that aren't covered by some subset of the sensors. Doing this dramatically cuts down the number of sensor sets to check. I gloss over this detail for the sake of focusing on the high-level aspects, but it's actually critical because there are 2<sup>40</sup> - 1 possible combinations of sensors, the vast majority of which are redundant. If the set of all sensors is `S`, then the sensor sets I discuss in this post are the elements of the  [power set](https://en.wikipedia.org/wiki/Power_set) of `S` (excluding the empty set).
 
 [^coordinate-system]: 
     In fig. 9. I've set up the origin of the "diagonal space" coordinate system so that `y'` and `x'` touch the top left and bottom left corners of the solution space respectively. There's nothing special about this convention, I chose it to make the visualisations neater. Nonetheless, here's some Rust code for converting between the systems using this convention:
