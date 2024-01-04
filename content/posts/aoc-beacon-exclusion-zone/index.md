@@ -4,6 +4,8 @@ date: 2023-12-31
 author: Gian Hancock
 toc: true
 skipRss: true
+githubDiscussionUrl: 'https://github.com/gian-hancock/gian-hancock.github.io/discussions/1'
+draft: false
 ---
 
 > NOTE:
@@ -458,8 +460,6 @@ And finally, here's a visualisation of the actual input I got from AoC[^actual-s
 ### 7.2. Performance Comparison
 
 > TODO: I haven't done this section yet.
-
-## 8. Footnotes
 
 [^aoc-problem]: 
     You'll also need to solve part 1 to get the part 2 description. Although I'm sure you can find it online somewhere.

@@ -1,0 +1,49 @@
+{{ define "main" }}
+<div class="wrapper post">
+    <main class="page-content" aria-label="Content">
+        <article>
+            <header class="header">
+                <h1 class="header-title">{{ .Title }}</h1>
+                {{ with .Date }}
+                {{ $ISO_time := dateFormat "2006-01-02T15:04:05-07:00" . }}
+                <div class="post-meta">
+                    <time datetime="{{ $ISO_time }}" itemprop="datePublished"> {{ . | time.Format ":date_medium" }} </time>
+                </div>
+                {{ end }}
+            </header>
+            <!-- Warn if githubDiscussionUrl is not set -->
+            {{ if not (isset .Params "githubdiscussionurl")}}
+                <pre>ERROR: ".Params.githubdiscussionurl is not defined</pre>
+                {{ if not .Draft }}
+                    {{ errorf ".Params.githubdiscussionurl is not defined in the front matter of %s" .File.Path }}
+                {{ end }}
+            {{ end }}
+            {{ partial "toc.html" .}}
+            <div class="page-content">
+                {{ .Content }}
+                <section>
+                    <h2>Comments</h2>
+                    <p>Thanks for reading! Have feedback, constructive critisism, or just have something to say? Leave a comment! Comments link directly to this <a href="{{ .Params.githubDiscussionUrl }}">GitHub discussion</a>, so feel free to comment there if you prefer.</p>
+                </section>
+                <script 
+                    src="https://giscus.app/client.js"
+                    data-repo="gian-hancock/gian-hancock.github.io"
+                    data-repo-id="R_kgDOJIwxIA"
+                    data-category="giscus comments (gianhancock.com)"
+                    data-category-id="DIC_kwDOJIwxIM4CcMH3"
+                    data-mapping="pathname"
+                    data-strict="1"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="dark_dimmed"
+                    data-lang="en"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+        </article>
+        {{- partial "comments.html" . -}}
+    </main>
+</div>
+{{ end }}
