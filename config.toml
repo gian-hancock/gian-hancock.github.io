@@ -32,29 +32,29 @@ enableEmoji = true
     name = 'Home'
     url = '/'
     weight = 10
-  [[menu.main]]
-    pageRef="posts"
-    name = 'Posts'
-    url = '/posts/'
-    weight = 20
-  [[menu.main]]
-    pageRef="about"
-    name = 'About'
-    url = '/about/'
-    weight = 30
+  # [[menu.main]]
+  #   pageRef="posts"
+  #   name = 'Posts'
+  #   url = '/posts/'
+  #   weight = 20
+  # [[menu.main]]
+  #   pageRef="about"
+  #   name = 'About'
+  #   url = '/about/'
+  #   weight = 30
 
 [params]
-  sitename = "Gian's Website"
+  sitename = "Gian's Blog"
   defaultColor = "dark" # set default color mode: dark or light
-  description = "My personal website, currently an work in progress"
+  description = "My personal blog. I write about things I find interesting."
   mainSections = ['posts']
 
 [params.author]
   avatar = "avatar_4.png" # put the file in assets folder; also ensure that image has same height and width
   # Note: image is not rendered if the resource(avatar image) is not found. No error is displayed.
-  intro = "Gian's Website"
+  intro = "Gian's Blog"
   name = "Gian Hancock"
-  description = "WIP"
+  description = "My personal blog. I write about things I find interesting."
 
 [[params.socialIcons]]
 name = "github"
