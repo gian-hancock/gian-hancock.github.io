@@ -72,6 +72,30 @@ $on-widescreen: 1152px;
     font-size: $base-font-size * $ratio;
 }
 
+.author-avatar {
+    -webkit-transform-origin: 45% 40%;
+    -moz-transform-origin: 45% 40%;
+    -ms-transform-origin: 45% 40%;
+    -o-transform-origin: 45% 40%;
+    transform-origin: 45% 40%;
+    -webkit-transition: all 0.75s ease-in-out;
+    -moz-transition: all 0.75s ease-in-out;
+    -o-transition: all 0.75s ease-in-out;
+    -ms-transition: all 0.75s ease-in-out;
+    transition: all 0.75s ease-in-out;
+    width: 150px !important;
+    height: 150px !important;
+}
+
+.author-avatar:hover {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+
 //////////////// 5. Import all sass files /////////////////
 
 @import "fonts";

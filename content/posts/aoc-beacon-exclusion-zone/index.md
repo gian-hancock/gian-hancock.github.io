@@ -18,17 +18,20 @@ draft: false
 > - [x] Review title and URL. Make note of how late the blog post is.
 > - [x] Make sure website RSS feed works
 > - [x] Double check title numbering
-> - [ ] gianhancock.com domain
+> - [x] gianhancock.com domain
+> - [x] Set up Github Discussions
+> - [x] https://giscus.app/
+> - [x] Fix website metadata.
 > - [ ] Complete all inline TODOs
 > - [ ] Add proper performance numbers for all approaches, add a table at the end including manhattan distance counts
 > - [ ] Clean up source code and diagrams in repo
 > - [ ] Fix implementation coordinate spaces with swapped `x'` `y'` axes and off by one.
-> - [ ] Set up Github Discussions
-> - [ ] https://giscus.app/
-> - [ ] Make sure website appears nicely on Feedly 
+> - [ ] Make sure website appears nicely on Feedly
 > # Later
+> - [ ] Facicon
 > - [ ] Implement proper asides rather than using blockquotes
 > - [ ] Implement readable implementations of each approach
+> - [ ] Improved table of contents, like this: https://os.phil-opp.com/freestanding-rust-binary/#introduction
 > - [ ] Consider switching from Hugo to Zola
 >   - [x] Table of contents
 
