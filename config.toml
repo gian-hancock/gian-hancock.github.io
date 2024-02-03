@@ -46,7 +46,7 @@ enableEmoji = true
 [params]
   sitename = "Gian's Blog"
   defaultColor = "dark" # set default color mode: dark or light
-  description = "My personal blog. I write about things I find interesting."
+  description = "My personal blog where I write about things I find interesting."
   mainSections = ['posts']
 
 [params.author]
@@ -54,7 +54,7 @@ enableEmoji = true
   # Note: image is not rendered if the resource(avatar image) is not found. No error is displayed.
   intro = "Gian's Blog"
   name = "Gian Hancock"
-  description = "My personal blog. I write about things I find interesting."
+  description = "My personal blog where I write about things I find interesting."
 
 [[params.socialIcons]]
 name = "github"
