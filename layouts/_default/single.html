@@ -41,6 +41,48 @@
                     crossorigin="anonymous"
                     async>
                 </script>
+                <script>
+                    const THEME_DARK = 'dark';
+                    const THEME_LIGHT = 'light';
+                    const THEME_TO_GISCUSS_THEME = {
+                        [THEME_DARK]: 'dark_dimmed', 
+                    [THEME_LIGHT]: 'light',
+                    };
+
+                    function getCurrentTheme() {
+                    return document.documentElement.classList.contains('dark') ? THEME_DARK : THEME_LIGHT;
+                    }
+
+                    function giscussSendMessage(message) {
+                    const iframe = document.querySelector('iframe.giscus-frame');
+                        if (!iframe) return;
+                    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+                    }
+
+                    function updateGiscussTheme() {
+                    giscussSendMessage({
+                        setConfig: {
+                        theme: THEME_TO_GISCUSS_THEME[getCurrentTheme()]
+                        }
+                    });
+                    }
+
+                    const themeObserver = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === "class") {
+                                updateGiscussTheme();
+                        }
+                    });
+                    });
+
+                    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+                    window.onload = function() {
+                        // HACK: Wait for the website theme to be loaded before initial giscus theme
+                        // update
+                        setTimeout(updateGiscussTheme, 1000);
+                    }
+                </script>
             </div>
         </article>
         {{- partial "comments.html" . -}}
