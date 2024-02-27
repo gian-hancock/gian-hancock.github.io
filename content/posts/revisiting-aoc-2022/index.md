@@ -8,10 +8,6 @@ githubDiscussionUrl: 'https://github.com/gian-hancock/gian-hancock.github.io/dis
 draft: false
 ---
 
-> NOTE:
-> 
-> This post is in draft and will change over time.
-
 ## 1. Advent of Code
 [Advent of Code](https://adventofcode.com/2022/about) (abbreviated AoC) is an annual Advent calendar of small programming puzzles. There's a programming puzzle for each day in the calendar, accompanied by a story which ties the problems together.
 
