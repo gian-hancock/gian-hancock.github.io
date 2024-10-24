@@ -3,7 +3,6 @@ title: "Revisiting AoC 2022: The Journey to a 20,000x Speedup"
 date: 2024-02-27
 author: Gian Hancock
 toc: true
-skipRss: true
 githubDiscussionUrl: 'https://github.com/gian-hancock/gian-hancock.github.io/discussions/2'
 draft: false
 ---
