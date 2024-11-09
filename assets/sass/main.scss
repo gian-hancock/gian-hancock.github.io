@@ -122,3 +122,8 @@ $on-widescreen: 1152px;
     image-rendering: crisp-edges; /* For Firefox */
 }
 
+.page-content > p {
+    margin: 0;
+    padding-top: $spacing-full - 18;
+    padding-bottom: $spacing-full - 18;
+}
