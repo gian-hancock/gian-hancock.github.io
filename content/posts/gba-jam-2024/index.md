@@ -3,7 +3,7 @@ title: "GBA Jam 2024"
 date: 2024-11-09
 author: Gian Hancock
 toc: true
-githubDiscussionUrl: 'https://github.com/gian-hancock/gian-hancock.github.io/discussions'
+githubDiscussionUrl: 'https://github.com/gian-hancock/gian-hancock.github.io/discussions/3'
 draft: false
 # Videos and screenshots taken from Mesen emulator
 # To get small but sharp videos without artifacts, I recorded using the raw option in Mesen, then compressed, upscaled and converted to webm using ffmpeg using the following command:
