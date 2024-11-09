@@ -264,7 +264,7 @@ While I wouldn't say we tested our game extensively, we did multiple full run th
 Overall, it was a very enjoyable project to work on and we were both highly motivated to see it through. There are a few primary factors which led to this:
 
 - **Technologies:** This was my first project in C++, and my first GBA project. I felt like I was constantly learning, but the learning curve wasn't so steep that we weren't making progress. I fell back to Rust for writing the dialogue code generator, which added some familiarity and variety to the project.
-- **Team:** Working in a small highly aligned teams has always been enjoyable for me. It's nice working people who share your enthusiasm for a project, while still benefiting from minimal coordination overhead.
+- **Team:** Working in a small highly aligned team has always been enjoyable for me. It's nice working with people who share your enthusiasm for a project, while still benefiting from minimal coordination overhead.
 - **Deadline:** Having a clear deadline definitely helped push me to keep the pace up. It also forced us to set a reasonable scope early on.
 
 ## 4. Wrap Up
