@@ -114,3 +114,11 @@ $on-widescreen: 1152px;
 {{ with .Site.Params.goToTop }}
 @import "goToTop";
 {{ end }}
+
+
+//////////////// Custom styles /////////////////
+.image-rendering-pixelated {
+    image-rendering: pixelated; /* For modern browsers */
+    image-rendering: crisp-edges; /* For Firefox */
+}
+
