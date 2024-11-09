@@ -132,9 +132,7 @@ I think 199ms is "good enough", but can we do better?
 
 > Honestly, this section is a bit of a slog, and (spoiler alert) it's only the 2nd best solution. I'd consider skipping to the [next section](#6-approach-3-line-intersection) unless you're really interested. You can always come back later. I found the ideas really interesting, so I didn't have the heart to cut the section completely.
 
-Now, remember that the problem data I got from AoC only has 40 sensors. That's miniscule compared to the 4×10<sup>6</sup> rows in our search area.
-
-Perhaps we can find an algorithm which operates primarily on sensors. Even a bad algorithm operating on 40 sensors is likely to be faster than a good algorithm operating on 4×10<sup>6</sup> points.
+Now, remember that the problem data I got from AoC only has 40 sensors. That's miniscule compared to the 4×10<sup>6</sup> rows in our search area. Perhaps we can find an algorithm which operates primarily on sensors. Even a bad algorithm operating on 40 sensors is likely to be faster than a good algorithm operating on 4×10<sup>6</sup> points.
 
 After some thought (and cheating[^inspiration]) I managed to find a way to solve the problem by iteratively ruling out sections of the search area. It's a bit tough to explain, and there are some fiddly details to work out, so let's start with a simplified version of the problem.
 
@@ -168,9 +166,9 @@ Let's step through this using the example above:
 - Iterate over all sets of sensors, removing covered rows from `possible_y_values`.
    - `{A}` covers no rows, no need to update `possible_y_values`.
    -  `{B}` covers no rows, no need to update `possible_y_values`. Okay, from now on I'm going to skip sets of sensors which don't cover any rows.
-   -  {A, B, C} covers `{3, 4}`, update `possible_y_values` from `{0, 1, 2, 3, 4}` to `{0, 1, 2}`
+   -  `{A, B, C}` covers `{3, 4}`, update `possible_y_values` from `{0, 1, 2, 3, 4}` to `{0, 1, 2}`
    -  `{A, D}` covers rows `{0, 1}`. Update `possible_y_values` from `{0, 1, 2}` to `{2}`
-   -  {D} covers rows `{0, 1}`. `possible_y_values` remains `{2}`
+   -  `{D}` covers rows `{0, 1}`. `possible_y_values` remains `{2}`
 - After iterating through all sensor sets, there is only one remaining possible y value: `2`. This is our result for the y coordinate.
 
 We can get the x coordinate by repeating this process for columns instead of rows[^range-exclusion-optimisation], in this case we would also get the value of `2` for x. This leaves us with the final solution of `(2, 2)`.
@@ -219,7 +217,7 @@ return possible_y_values.first().start
 
 The finer details of how to implement `get_sensor_sets()`, `get_covered_y_range()`, and `subtract_range()` are omitted for brevity. This is admittedly a cop out because they aren't completely trivial to implement, however I don't want to distract from the main point, which is the higher-level aspects of the algorithm[^empty-sensor-sets]. 
 
-### 5.2 Tackling the Full Problem
+### 5.2. Tackling the Full Problem
 Now we've got that simpler case out of the way, how is it affected when we move onto the full problem? Well, we can use the same approach, however the sensor coverage is no longer axis aligned:
 
 {{<figure src="diamond-range-exclusion.svg" width="600px" caption="fig. 8: The ranges of rows `[0, 1]` and `[3, 4]` (shaded green) are covered by sensors, leaving 2 as the solution's y coordinate.">}}
@@ -321,7 +319,7 @@ We know our solution is unique, so all integer points surrounding the solution m
 
 This isn't an exhaustive list of cases, but it's enough to gain some intuition for the problem. We see that in all cases the solution is always exactly 1 unit away from the border of a sensor. This makes sense, as we've already established that the points adjacent to the solution must be covered.
 
-If we expand each of our sensors' range by one, then our solution will always be *on* the border of a sensor. Let's redraw these examples with enlarged sensors:
+If we expand each of our sensors' range by one, then our solution will always be *on* the border of a sensor, and near the intersection of two borders. Let's redraw these examples with enlarged sensors:
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
   {{<figure src="intersection-case-1-expanded.svg" caption="fig. 20: \"Box\" enlarged" width="500px">}}
@@ -372,7 +370,7 @@ Now we have some literal edge cases to take care of, let's look at some examples
 </div>
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="edge-case-1-expanded.svg" width="300px" caption="fig. 31: Edge case 1">}}
+  {{<figure src="edge-case-1-expanded.svg" width="300px" caption="fig. 31: Edge case 1 expanded">}}
   {{<figure src="edge-case-2-expanded.svg" width="300px" caption="fig. 32: Edge case 2 expanded">}}
 </div>
 
