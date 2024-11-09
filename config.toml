@@ -44,17 +44,17 @@ enableEmoji = true
   #   weight = 30
 
 [params]
-  sitename = "Gian's Blog"
+  sitename = "Gian's Website"
   defaultColor = "dark" # set default color mode: dark or light
-  description = "Hi! This is my personal blog where I practice technical writing and explore topics that I find interesting."
+  description = "Hi! Welcome to my personal website, where I occasionally post things."
   mainSections = ['posts']
 
 [params.author]
   avatar = "avatar_4.png" # put the file in assets folder; also ensure that image has same height and width
   # Note: image is not rendered if the resource(avatar image) is not found. No error is displayed.
-  intro = "Gian's Blog"
+  intro = "Gian's Website"
   name = "Gian Hancock"
-  description = "Hi! This is my personal blog where I practice technical writing and explore topics that I find interesting."
+  description = "Hi! Welcome to my personal website, where I occasionally post things."
 
 [[params.socialIcons]]
 name = "github"
