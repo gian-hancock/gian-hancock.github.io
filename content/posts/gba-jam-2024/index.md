@@ -252,6 +252,8 @@ We totally underestimated the impact of sound. Just an hour of time adding royal
 #### 3.5.4. Graphics
 Graphics are time intensive, and a whole skill of their own, so "make graphics better" is not particularly insightful. But it is worth noting that small things can have a disproportionate impact. The title screen uses a wide font on the "start game"/"load save" buttons, it doesn't fit well but I just couldn't be bothered changing it. The title screen is the first impression, and this font was indeed the subject of someone's very first reaction to the game. I should keep this in mind as I tend to underestimate the impact of little things like this.
 
+{{<figure src="title-screen.png" width="600px" class="image-rendering-pixelated" caption="The title screen (feat. ugly wide font)" alt="A screenshot of the title screen, including the ugly wide font.">}}
+
 #### 3.5.5. Testing
 While I wouldn't say we tested our game extensively, we did multiple full run throughs before submitting. We found and fixed a surprising number of issues as a direct result of this. It's always easy to neglect properly playtesting in game jams, but our experience here really shows how important it is. One notable change we made is doubling the walking speed of the main character, it wasn't until I was playing the game end to end that I realised we needed to do this.
 
