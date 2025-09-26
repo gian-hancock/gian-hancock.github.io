@@ -1,0 +1,308 @@
+<div class="exponential-visualizer">
+    <style>
+        .exponential-visualizer {
+            background: var(--bg-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .exponential-visualizer h2 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .exponential-visualizer .formula {
+            background: var(--code-bg-color);
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .exponential-visualizer canvas {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .exponential-visualizer .controls {
+            margin: 20px 0;
+        }
+
+        .exponential-visualizer .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .exponential-visualizer label {
+            font-weight: 600;
+            color: var(--text-color);
+            min-width: 120px;
+        }
+
+        .exponential-visualizer input[type="range"] {
+            flex: 1;
+            min-width: 200px;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .exponential-visualizer input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #4CAF50;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .exponential-visualizer input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #4CAF50;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .exponential-visualizer .value-display {
+            min-width: 60px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .exponential-visualizer .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .exponential-visualizer .stat {
+            text-align: center;
+        }
+
+        .exponential-visualizer .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .exponential-visualizer .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-top: 5px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .exponential-visualizer {
+                padding: 20px;
+            }
+
+            .exponential-visualizer canvas {
+                width: 100%;
+                height: auto;
+            }
+
+            .exponential-visualizer .slider-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .exponential-visualizer label {
+                min-width: auto;
+            }
+
+            .exponential-visualizer input[type="range"] {
+                min-width: auto;
+            }
+        }
+    </style>
+
+    <h2>Exponential Function Visualizer</h2>
+    <div class="formula">
+        f(x) = (x/450)^k
+    </div>
+
+    <canvas id="exp-viz-plot" width="700" height="400"></canvas>
+
+    <div class="controls">
+        <div class="slider-container">
+            <label>Shape (k):</label>
+            <input type="range" id="exp-viz-shape" min="0.1" max="20" step="0.1" value="2">
+            <span class="value-display" id="exp-viz-shapeValue">2.0</span>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-label">At x=0</div>
+            <div class="stat-value" id="exp-viz-valueAt0">0.0</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">At x=225</div>
+            <div class="stat-value" id="exp-viz-valueAt225">0.25</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">At x=450</div>
+            <div class="stat-value" id="exp-viz-valueAt450">1.0</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('exp-viz-plot');
+            const ctx = canvas.getContext('2d');
+
+            // Get controls
+            const shapeSlider = document.getElementById('exp-viz-shape');
+            const shapeValue = document.getElementById('exp-viz-shapeValue');
+
+            // The exponential function (simplified with fixed MIN=0, MAX=1)
+            function exponentialCurve(x, shape) {
+                const t = x / 450;
+                return Math.pow(t, shape);
+            }
+
+            function drawPlot() {
+                const shape = parseFloat(shapeSlider.value);
+                const MIN = 0;
+                const MAX = 1;
+
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Set up dimensions with padding
+                const padding = 40;
+                const plotWidth = canvas.width - 2 * padding;
+                const plotHeight = canvas.height - 2 * padding;
+
+                // Draw axes
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                // X-axis
+                ctx.moveTo(padding, canvas.height - padding);
+                ctx.lineTo(canvas.width - padding, canvas.height - padding);
+                // Y-axis
+                ctx.moveTo(padding, padding);
+                ctx.lineTo(padding, canvas.height - padding);
+                ctx.stroke();
+
+                // Draw grid lines
+                ctx.strokeStyle = '#f0f0f0';
+                ctx.lineWidth = 0.5;
+                // Vertical grid lines
+                for (let i = 0; i <= 9; i++) {
+                    const x = padding + (i / 9) * plotWidth;
+                    ctx.beginPath();
+                    ctx.moveTo(x, padding);
+                    ctx.lineTo(x, canvas.height - padding);
+                    ctx.stroke();
+                }
+                // Horizontal grid lines
+                for (let i = 0; i <= 5; i++) {
+                    const y = padding + (i / 5) * plotHeight;
+                    ctx.beginPath();
+                    ctx.moveTo(padding, y);
+                    ctx.lineTo(canvas.width - padding, y);
+                    ctx.stroke();
+                }
+
+                // Draw the curve
+                ctx.strokeStyle = '#4CAF50';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                for (let x = 0; x <= 450; x += 1) {
+                    const y = exponentialCurve(x, shape);
+                    const plotX = padding + (x / 450) * plotWidth;
+                    const plotY = canvas.height - padding - ((y - MIN) / (MAX - MIN)) * plotHeight;
+
+                    if (x === 0) {
+                        ctx.moveTo(plotX, plotY);
+                    } else {
+                        ctx.lineTo(plotX, plotY);
+                    }
+                }
+                ctx.stroke();
+
+                // Draw key points
+                const keyPoints = [
+                    { x: 0, label: '0' },
+                    { x: 225, label: '225' },
+                    { x: 450, label: '450' }
+                ];
+
+                ctx.fillStyle = '#ff5722';
+                keyPoints.forEach(point => {
+                    const y = exponentialCurve(point.x, shape);
+                    const plotX = padding + (point.x / 450) * plotWidth;
+                    const plotY = canvas.height - padding - ((y - MIN) / (MAX - MIN)) * plotHeight;
+
+                    // Draw point
+                    ctx.beginPath();
+                    ctx.arc(plotX, plotY, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    // Draw label
+                    ctx.fillStyle = '#666';
+                    ctx.font = '12px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(point.label, plotX, canvas.height - padding + 20);
+                    ctx.fillStyle = '#ff5722';
+                });
+
+                // Draw axis labels
+                ctx.fillStyle = '#666';
+                ctx.font = '14px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('x', canvas.width / 2, canvas.height - 5);
+
+                ctx.save();
+                ctx.translate(12, canvas.height / 2);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText('f(x)', 0, 0);
+                ctx.restore();
+
+                // Draw y-axis values
+                ctx.font = '11px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(MIN.toFixed(0), padding - 5, canvas.height - padding);
+                ctx.fillText(MAX.toFixed(0), padding - 5, padding);
+
+                // Update stats
+                document.getElementById('exp-viz-valueAt0').textContent = exponentialCurve(0, shape).toFixed(3);
+                document.getElementById('exp-viz-valueAt225').textContent = exponentialCurve(225, shape).toFixed(3);
+                document.getElementById('exp-viz-valueAt450').textContent = exponentialCurve(450, shape).toFixed(3);
+            }
+
+            // Update value displays
+            shapeSlider.addEventListener('input', () => {
+                shapeValue.textContent = parseFloat(shapeSlider.value).toFixed(1);
+                drawPlot();
+            });
+
+            // Initial draw
+            drawPlot();
+        })();
+    </script>
+</div>
