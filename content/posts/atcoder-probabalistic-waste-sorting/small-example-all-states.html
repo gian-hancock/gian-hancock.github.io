@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Build Debug - 2025-09-28 20:27:50</title>
+    <style>
+        body { font-family: monospace; margin: 20px; }
+        pre { margin: 10px 0; padding: 10px; background: #f5f5f5; border-left: 3px solid #333; }
+        .call { border: 2px solid #333; margin: 20px 0; padding: 15px; }
+        .svg { border: 1px solid #ccc; margin: 10px 0; }
+    </style>
+</head>
+<body>
+<h1>Graph Build Debug Log</h1>
+<p>Generated: 2025-09-28 20:27:50</p>
+
+<div class="call">
+<h3>Call #1 - 20:27:50.331</h3>
+
+<pre>Path State:
+Path is empty
+
+Frontier State:
+S3
+
+Connected Processors: 0 ([])
+Visited States: 0
+Current canonical form: -1:3
+
+Graph Adjacency List:
+Inlet → S3</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #2 - 20:27:50.331</h3>
+
+<pre>Path State:
+S3
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 2 ([0, 1])
+Visited States: 1
+Current canonical form: -1:3|3:0,1
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P0, P1</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #3 - 20:27:50.332</h3>
+
+<pre>Path State:
+S3
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 2 ([0, 2])
+Visited States: 1
+Current canonical form: -1:3|3:0,2
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P0, P2</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #4 - 20:27:50.332</h3>
+
+<pre>Path State:
+S3
+
+Frontier State:
+S4
+
+Connected Processors: 1 ([0])
+Visited States: 1
+Current canonical form: -1:3|3:0,4
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P0, S4</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #5 - 20:27:50.432</h3>
+
+<pre>Path State:
+S3 → S4
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 3 ([0, 1, 2])
+Visited States: 2
+Current canonical form: -1:3|3:0,4|4:1,2
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P0, S4
+S4 → P1, P2</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #6 - 20:27:50.433</h3>
+
+<pre>Path State:
+S3
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 2 ([1, 2])
+Visited States: 2
+Current canonical form: -1:3|3:1,2
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P1, P2</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #7 - 20:27:50.433</h3>
+
+<pre>Path State:
+S3
+
+Frontier State:
+S4
+
+Connected Processors: 1 ([1])
+Visited States: 2
+Current canonical form: -1:3|3:1,4
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P1, S4</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #8 - 20:27:50.433</h3>
+
+<pre>Path State:
+S3
+
+Frontier State:
+S4
+
+Connected Processors: 1 ([2])
+Visited States: 3
+Current canonical form: -1:3|3:2,4
+
+Graph Adjacency List:
+Inlet → S3
+S3 → P2, S4</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #9 - 20:27:50.433</h3>
+
+<pre>Path State:
+Path is empty
+
+Frontier State:
+S4
+
+Connected Processors: 0 ([])
+Visited States: 0
+Current canonical form: -1:4
+
+Graph Adjacency List:
+Inlet → S4</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #10 - 20:27:50.433</h3>
+
+<pre>Path State:
+S4
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 2 ([0, 1])
+Visited States: 1
+Current canonical form: -1:4|4:0,1
+
+Graph Adjacency List:
+Inlet → S4
+S4 → P0, P1</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #11 - 20:27:50.433</h3>
+
+<pre>Path State:
+S4
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 2 ([0, 2])
+Visited States: 1
+Current canonical form: -1:4|4:0,2
+
+Graph Adjacency List:
+Inlet → S4
+S4 → P0, P2</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #12 - 20:27:50.433</h3>
+
+<pre>Path State:
+S4
+
+Frontier State:
+S3
+
+Connected Processors: 1 ([0])
+Visited States: 1
+Current canonical form: -1:4|4:0,3
+
+Graph Adjacency List:
+Inlet → S4
+S4 → P0, S3</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #13 - 20:27:50.433</h3>
+
+<pre>Path State:
+S4
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 2 ([1, 2])
+Visited States: 2
+Current canonical form: -1:4|4:1,2
+
+Graph Adjacency List:
+Inlet → S4
+S4 → P1, P2</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#2c3e50" stroke-width="1"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #14 - 20:27:50.433</h3>
+
+<pre>Path State:
+S4
+
+Frontier State:
+S3
+
+Connected Processors: 1 ([1])
+Visited States: 2
+Current canonical form: -1:4|4:1,3
+
+Graph Adjacency List:
+Inlet → S4
+S4 → P1, S3</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #15 - 20:27:50.433</h3>
+
+<pre>Path State:
+S4
+
+Frontier State:
+S3
+
+Connected Processors: 1 ([2])
+Visited States: 3
+Current canonical form: -1:4|4:2,3
+
+Graph Adjacency List:
+Inlet → S4
+S4 → P2, S3</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#f39c12" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+<div class="call">
+<h3>Call #16 - 20:27:50.534</h3>
+
+<pre>Path State:
+S4 → S3
+
+Frontier State:
+Frontier is empty
+
+Connected Processors: 3 ([0, 1, 2])
+Visited States: 4
+Current canonical form: -1:4|3:0,1|4:2,3
+
+Graph Adjacency List:
+Inlet → S4
+S3 → P0, P1
+S4 → P2, S3</pre>
+
+<div class="svg">
+
+<svg width="800" height="600" class="graph-svg">
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+        </marker>
+    </defs>
+    <line x1="2.9702970297029703" y1="300.0" x2="240.59405940594058" y2="151.4851485148515" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="478.2178217821782" y2="2.9702970297029703" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="151.4851485148515" x2="240.59405940594058" y2="448.5148514851485" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="597.029702970297" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><line x1="240.59405940594058" y1="448.5148514851485" x2="478.2178217821782" y2="300.0" stroke="#34495e" stroke-width="2" marker-end="url(#arrowhead)"/><rect x="-12.02970297029703" y="290.0" width="30" height="20" fill="#e74c3c" stroke="#2c3e50" stroke-width="1"/><text x="2.9702970297029703" y="304.0" text-anchor="middle" font-size="10" fill="white">Inlet</text><rect x="466.2178217821782" y="589.029702970297" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="600.029702970297" text-anchor="middle" font-size="9" fill="white">P0</text><rect x="466.2178217821782" y="292.0" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="303.0" text-anchor="middle" font-size="9" fill="white">P1</text><rect x="466.2178217821782" y="-5.02970297029703" width="24" height="16" fill="#3498db" stroke="#2c3e50" stroke-width="1"/><text x="478.2178217821782" y="5.97029702970297" text-anchor="middle" font-size="9" fill="white">P2</text><circle cx="240.59405940594058" cy="448.5148514851485" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="451.5148514851485" text-anchor="middle" font-size="9" fill="white">S3</text><circle cx="240.59405940594058" cy="151.4851485148515" r="12" fill="#2ecc71" stroke="#e74c3c" stroke-width="3"/><text x="240.59405940594058" y="154.4851485148515" text-anchor="middle" font-size="9" fill="white">S4</text>
+</svg>
+</div>
+</div>
+
+</body>
+</html>
