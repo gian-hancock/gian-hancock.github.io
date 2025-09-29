@@ -98,7 +98,7 @@ function build_graph(graph_state, frontier, path, visited_states):
 
 #### 2.1.2. Visualisation
 
-I created a basic visualisation of the graph topology to help with debugging. You can see a small test example [here](small-example-all-states.html). Note that:
+I created a basic visualisation of the graph topology to help with debugging. You can see a small test example [here](/posts/atcoder-probabalistic-waste-sorting/small-example-all-states.html). Note that:
 - The inlet is the red node on the left (text gets cut off)
 - P# nodes are processors
 - S# nodes are sorters
@@ -111,7 +111,7 @@ I created a basic visualisation of the graph topology to help with debugging. Yo
 - Call #8, #12, and #14 is a dead end for similar reasons to Call #7. After these calls, the search backtracks and continues searching.
 - Even this tiny example has a surprising number of states. There would be quite a few more if we allowed merging, which is allowed by the problem rules, but I chose to disallow it to reduce the search space.
 
-Finally, I added a visualisation mode which only outputs a visualisation each time a new best graph is found. This is useful for real-sized inputs such as [this one](real-input-partial.html). You can see that my approach doesn't manage to connect all processors. There is much room for improvement here.
+Finally, I added a visualisation mode which only outputs a visualisation each time a new best graph is found. This is useful for real-sized inputs such as [this one](/posts/atcoder-probabalistic-waste-sorting/real-input-partial.html). You can see that my approach doesn't manage to connect all processors. There is much room for improvement here.
 
 ### 2.2. Phase 2: Assignment Optimisation
 
