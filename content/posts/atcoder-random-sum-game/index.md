@@ -66,13 +66,15 @@ I also established a simple workflow for running my code locally and submitting 
 
 > I'll provide scores after each submission to show progress. There's a formula for calculating the score based on the total error across 150 test cases, but it's not important to understand the details. All you need to know is that higher is better.
 
-**Score:** 24.8M
+**Score:** 24.8M[^1]
+
+[^1]: You might expect a score of 0 here since we're discarding all cards, but you could actually get a worse result by assigning the maximum value (10¹⁵) to all 500 cards and not discarding any of them. This would create massive overshoots when trying to assign cards to targets.
 
 ### 3.2. First "real" submission
 Next I implemented a "real" strategy. First, let me define some constants I'll reference throughout this walkthrough:
-* `LOWER` = 9.98 × 10¹⁴ (minimum possible target value)
-* `UPPER` = 1.002 × 10¹⁵ (maximum possible target value)
-* `RANGE` = `UPPER` - `LOWER` = 4 × 10¹² (span of possible target values)
+* `LOWER` = 9.98 × 10¹⁴ = 5 quadrillion - 2 trillion (minimum possible target value)
+* `UPPER` = 1.002 × 10¹⁵ = 5 quadrillion + 2 trillion (maximum possible target value)
+* `RANGE` = `UPPER` - `LOWER` = 4 × 10¹² = 4 trillion (span of possible target values)
 
 The key insight: `RANGE` is tiny compared to the target values themselves. This means if we give each pile a base card worth `LOWER`, we're already more than 99% of the way to any target before even starting.
 
@@ -93,7 +95,7 @@ I added some visualisations to show the selected card values, the used values an
 > These aren't the prettiest visualisations, but here's how to interpret them: Each image is a histogram with smaller values at the top and larger ones at the bottom. The Start and End columns show the boundaries of each bucket. The horizontal bars show the Count (number of values in each bucket). The Size column shows the range each bucket covers and isn't particularly useful.
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="sub-2-selected-values.png" width="500px" caption="Selected values: Logarithmic distribution heavily weighted to lower end.">}}
+  {{<figure src="sub-2-selected-values.png" width="500px" caption="Selected values (excluding 50 hardcoded values): Logarithmic distribution heavily weighted to lower end.">}}
   {{<figure src="sub-2-used-cards.png" width="500px" caption="Used values: 499/500 cards used.">}}
   {{<figure src="sub-2-discarded.png" width="500px" caption="Discarded values: 1/500 cards discarded.">}}
 </div>
@@ -105,7 +107,7 @@ I decided to switch to a simple linear function for generating the card values, 
 I also improved the Assignment Phase by modifying the greedy assignment approach to assign the cards in order from largest to smallest. The idea was to prioritise larger cards as they are harder to fit in later.
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="sub-3-selected-values.png" width="500px" caption="Selected values: Linear distribution">}}
+  {{<figure src="sub-3-selected-values.png" width="500px" caption="Selected values (excluding 50 hardcoded values): Linear distribution">}}
   {{<figure src="sub-3-used-cards.png" width="500px" caption="Used values: 102/500 cards used.">}}
   {{<figure src="sub-3-discarded.png" width="500px" caption="Discarded values: 398/500 cards discarded.">}}
 </div>
@@ -132,7 +134,7 @@ At this point I had two parameters to optimise: `k` and `shrink_factor`. I tweak
 I got a new high score using `k = 5.0` and a `shrink_factor = 0%`
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="sub-8-selected-values.png" width="500px" caption="Selected values: Exponential distribution (k=5.0)">}}
+  {{<figure src="sub-8-selected-values.png" width="500px" caption="Selected values (excluding 50 hardcoded values): Exponential distribution (k=5.0)">}}
   {{<figure src="sub-8-used-cards.png" width="500px" caption="Used values: 236/500 cards used.">}}
   {{<figure src="sub-8-discarded.png" width="500px" caption="Discarded values: 264/500 cards discarded.">}}
 </div>
@@ -154,7 +156,7 @@ This made a marginal improvement to my score.
 I kept tuning the parameters, eventually landing on `k = 10.0` and `shrink_factor = 0.1%`
 
 <div style="width: 90vw; position: relative; left: 50%; right: 50%; margin-left: -45vw; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  {{<figure src="sub-13-selected-values.png" width="500px" caption="Selected values: Exponential distribution (k=10.0)">}}
+  {{<figure src="sub-13-selected-values.png" width="500px" caption="Selected values (excluding 50 hardcoded values): Exponential distribution (k=10.0)">}}
   {{<figure src="sub-13-used-cards.png" width="500px" caption="Used values: 349/500 cards used.">}}
   {{<figure src="sub-13-discarded.png" width="500px" caption="Discarded values: 151/500 cards discarded.">}}
 </div>
