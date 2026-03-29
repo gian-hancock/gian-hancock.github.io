@@ -12,19 +12,16 @@
                 </div>
                 {{ end }}
             </header>
-            <!-- Warn if githubDiscussionUrl is not set -->
-            {{ if not (isset .Params "githubdiscussionurl")}}
-                <pre>ERROR: ".Params.githubdiscussionurl is not defined</pre>
-                {{ if not .Draft }}
-                    {{ errorf ".Params.githubdiscussionurl is not defined in the front matter of %s" .File.Path }}
-                {{ end }}
-            {{ end }}
             {{ partial "toc.html" .}}
             <div class="page-content">
                 {{ .Content }}
                 <section>
                     <h2>Comments</h2>
-                    <p>Thanks for reading! Feel free to leave a comment below, comments are linked directly to <a href="{{ .Params.githubDiscussionUrl }}">this GitHub discussion</a>, so you can comment  there directly if you prefer.</p>
+                    {{ if isset .Params "githubdiscussionurl" }}
+                    <p>Thanks for reading! Feel free to leave a comment below, comments are linked directly to <a href="{{ .Params.githubDiscussionUrl }}">this GitHub discussion</a>, so you can comment there directly if you prefer.</p>
+                    {{ else }}
+                    <p>Thanks for reading! Feel free to leave a comment below.</p>
+                    {{ end }}
                 </section>
                 <script 
                     src="https://giscus.app/client.js"
