@@ -12,6 +12,11 @@
                 </div>
                 {{ end }}
             </header>
+            {{ with .Params.headerImage }}
+            <figure style="margin: 0 auto 2rem; text-align: center;">
+                <img src="{{ . | relURL }}" alt="{{ $.Params.headerImageAlt | default $.Title }}" style="display: block; width: min(1100px, 100%); margin: 0 auto; filter: drop-shadow(0 18px 30px rgba(27, 16, 88, 0.35));">
+            </figure>
+            {{ end }}
             {{ partial "toc.html" .}}
             <div class="page-content">
                 {{ .Content }}
